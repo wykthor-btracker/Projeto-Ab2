@@ -1,0 +1,6 @@
+#ifndef TRATAMENTOARQUIVOS_H
+#define TRATAMENTOARQUIVOS_H
+
+
+
+#endif
