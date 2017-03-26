@@ -5,7 +5,7 @@
 
 struct recebimento {
 	unsigned int numeroDocumento;
-	unsigned float valorRecebimento;
+	float valorRecebimento;
 	char dataEmissao[11];
 	char dataVencimento[11];
 	unsigned int codigoCliente;
@@ -14,7 +14,7 @@ struct recebimento {
 typedef struct recebimento* Recebimento;
 
 Recebimento novoRecebimento(unsigned int numeroDocumento,
-		unsigned float valorRecebimento,
+		float valorRecebimento,
 		String dataEmissao, String dataVencimento, 
 		unsigned int codigoCliente);
 
