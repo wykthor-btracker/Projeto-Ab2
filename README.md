@@ -25,6 +25,6 @@
 
 
 #**Tarefas específicas**
-##Implementar arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 27/03)
+##Implementar arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 27/03) - ok
 ##Implementar arquivo Recebimento (Responsável: Pedro Soares; Deadline: 27/03)
 ##Implementar arquivo Recebimentos (Responsável: Wykthor Cavalcante; Deadline: 28/03)
