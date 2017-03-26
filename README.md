@@ -2,9 +2,9 @@
 
 #**Projeto de gerenciamento de uma distribuidora** 
 ## Contribuidores:
-## Aurélio Buarque 
+## Aurélio Buarque (https://github.com/ABuarque)
 ## Pedro Soares 
-## Wykthor Cavalcante
+## Wykthor Cavalcante (https://github.com/wykthor-btracker)
 
 
 ----------
