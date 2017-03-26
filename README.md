@@ -1,5 +1,4 @@
-# Projeto-Ab2
-Projeto pra laboratório de programação pra AB2
+# Projeto pra laboratório de programação pra AB2
 
 #Projeto de gerenciamento de uma distribuidora 
 ##Contribuidores:
