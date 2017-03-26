@@ -1,7 +1,7 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-#include "dependencias/stringHandling.c"
+#include "dependencias/stringHandling.h"
 
 struct cliente {
 	char nome[101];
