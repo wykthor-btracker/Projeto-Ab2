@@ -7,7 +7,7 @@
 ##Wykthor Cavalcante
 
 #Descrição de operação
-###Adicionar novos clientes
+###Adicionar novos clientes 
 ###Ver dados de clientes
 ###Adicionar novos recebimentos
 ###Mostrar recebimentos
