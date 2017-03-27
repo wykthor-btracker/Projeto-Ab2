@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 int nomeValido(String nome) {
 	DEBUG printf("Inside nomeValido()\n");
