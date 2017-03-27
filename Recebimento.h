@@ -12,10 +12,31 @@ struct recebimento {
 };
 
 typedef struct recebimento* Recebimento;
+typedef struct recebimento receb;
 
 Recebimento novoRecebimento(unsigned int numeroDocumento,
 		float valorRecebimento,
 		String dataEmissao, String dataVencimento, 
 		unsigned int codigoCliente);
+
+int pegarNumDocumento(Recebimento recebimento);
+
+float pegarValorRecebimento(Recebimento recebimento);
+
+String pegarDataEmissao(Recebimento recebimento);
+
+String pegarDataVencimento(Recebimento recebimento);
+
+int pegarCodClienteRecebimento(Recebimento recebimento);
+
+/*
+Recebimento buscarRecebimentoPorCliente(Cliente listCliente, String nomeCliente);
+
+Recebimento buscarRecebimentosporData(String dataInicio,String dataFinal);
+
+int verificarQtdRecebimentos(Cliente listCliente, unsigned int codigoCliente);
+*/
+
+void destruirRecebimento(Recebimento recebimento);
 
 #endif
