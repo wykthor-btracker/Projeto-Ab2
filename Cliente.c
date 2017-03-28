@@ -82,6 +82,14 @@ void mudarCodigoCliente(Cliente cliente,
 	cliente->codigoCliente = novoCodigo;
 }
 
+int pegarContador(Cliente cliente) {
+	return cliente->contador;
+}
+
+void mudarContador(Cliente cliente, int novoContador) {
+	cliente->contador = novoContador;
+}
+
 void destruirCliente(Cliente cliente) {
 	free(cliente);
 }

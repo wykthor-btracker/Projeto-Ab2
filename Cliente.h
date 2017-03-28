@@ -8,6 +8,7 @@ struct cliente {
 	char endereco[201];
 	char telefone[12];
 	unsigned int codigoCliente;
+	int contador;
 };
 
 /*
@@ -99,6 +100,22 @@ void mudarTelefone(Cliente cliente, String novoTelefone);
  * @param o novo codigo
  */
 void mudarCodigoCliente(Cliente cliente, unsigned int novoCodigo);
+
+/*
+ * Essa funcao retorna o contador do cliente
+ *
+ * @param cliente 
+ * @param o contador
+ */
+int pegarContador(Cliente cliente);
+
+/*
+ * Essa funcao altera o contador do cliente.
+ *
+ * @param cliente que ira ser modificado.
+ * @param o novo contador
+ */
+void mudarContador(Cliente cliente, int novoContador);
 
 /*
  * Essa funcao funciona como um destrutor
