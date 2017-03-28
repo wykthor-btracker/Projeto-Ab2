@@ -8,14 +8,14 @@
 
 Recebimento novoRecebimento(unsigned int numeroDocumento,
 		float valorRecebimento,
-		String dataEmissao, String dataVencimento, 
+		Data dataEmissao, Data dataVencimento, 
 		unsigned int codigoCliente) {
 
 	Recebimento recebimento = (Recebimento) malloc(sizeof(receb));
 	recebimento->numeroDocumento = numeroDocumento;
 	recebimento->valorRecebimento = valorRecebimento;
-	copyString(recebimento->dataEmissao,dataEmissao);
-	copyString(recebimento->dataVencimento,dataVencimento);
+	recebimento->dataEmissao = dataEmissao;
+	recebimento->dataVencimento = dataVencimento;
 	recebimento->codigoCliente = codigoCliente;
 
 	return recebimento;
@@ -29,11 +29,11 @@ float pegarValorRecebimento(Recebimento recebimento){
 	return recebimento->valorRecebimento;
 }
 
-String pegarDataEmissao(Recebimento recebimento){
+Data pegarDataEmissao(Recebimento recebimento){
 	return recebimento->dataEmissao;
 }
 
-String pegarDataVencimento(Recebimento recebimento){
+Data pegarDataVencimento(Recebimento recebimento){
 	return recebimento->dataVencimento;
 }
 
@@ -41,28 +41,17 @@ int pegarCodClienteRecebimento(Recebimento recebimento){
 	return recebimento->codigoCliente;
 }
 
-/*
-Recebimento buscarRecebimentoPorCliente(Cliente listCliente,String nomeCliente){ 
-
+void mudarDataVencimento(Recebimento recebimento,Data dataVencimento){
+	recebimento->dataVencimento = dataVencimento;
 }
 
-Recebimento buscarRecebimentosporData(String dataInicio,String dataFinal){
-	
+void mudarDataEmissao(Recebimento recebimento, Data dataEmissao){
+	recebimento->dataEmissao = dataEmissao;
 }
 
-int verificarQtdRecebimentos(Cliente listCliente, unsigned int codigoCliente){
-	int count = 0;
-
-	while(listCliente->next != NULL){
-		if(isEqual(listCliente->cliente->codigoCliente,codigoCliente))
-			count++;
-
-		listCliente = listCliente->next;
-	}
-
-	return count;
+void mudarValorRecebimento(Recebimento recebimento, float valorRecebimento){
+	recebimento->valorRecebimento = valorRecebimento;
 }
-*/
 
 void destruirRecebimento(Recebimento recebimento){
 	free(recebimento);
