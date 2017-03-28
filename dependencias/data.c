@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+// 1 -- TRUE 0 -- FALSE
 int validaData(Data data){
 	if(data.dia <= 31 && data.mes <= 12){
 		if(data.ano >= 1000 && data.ano <= 9999){

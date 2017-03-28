@@ -1,5 +1,7 @@
 #include "Recebimento.h"
+#include "RecebimentoExcecoes.h"
 #include "dependencias/stringHandling.h"
+#include "dependencias/data.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,6 +16,22 @@ Recebimento novoRecebimento(unsigned int numeroDocumento,
 	Recebimento recebimento = (Recebimento) malloc(sizeof(receb));
 	recebimento->numeroDocumento = numeroDocumento;
 	recebimento->valorRecebimento = valorRecebimento;
+
+	while(!validaData(dataEmissao)){
+		printf("Formato da data de emissão inválido, informe uma data no formato: dd/mm/yyyy\nDigite uma nova data de emissão:");
+		scanf(" %d/%d/%d",&recebimento->dataEmissao.dia,&recebimento->dataEmissao.mes,&recebimento->dataEmissao.ano);
+	}
+
+	while(!validaData(dataVencimento)){
+		printf("Formato da data de vencimento inválido, informe uma data no formato dd/mm/yyyy\nDigite uma nova data de vencimento:");
+		scanf(" %d/%d/%d",&recebimento->dataVencimento.dia,&recebimento->dataVencimento.mes,&recebimento->dataVencimento.ano);
+	}
+	
+	while(!validaData(dataVencimento) && !validarDataRecebimento(dataEmissao,dataVencimento) ){
+		printf("A data de vencimento é menor do que a data de emissão, informe uma nova data de vencimento no formato dd/mm/yyyy:\n");
+		scanf(" %d/%d/%d",&recebimento->dataVencimento.dia,&recebimento->dataVencimento.mes,&recebimento->dataVencimento.ano);
+	}
+
 	recebimento->dataEmissao = dataEmissao;
 	recebimento->dataVencimento = dataVencimento;
 	recebimento->codigoCliente = codigoCliente;
