@@ -5,24 +5,24 @@
 #include "Cliente.h"
 
 //TODO
-int SalvarRecebimento(Recebimento recebimento,Cliente cliente);
+int salvarRecebimento(Recebimento recebimento,Cliente cliente);
 //Ler arquivo, checar se o limite de recebimentos foi alcancado, caso nao,
 //Encontrar lugar na lista em que o recebimento deve ser adicionado,
 //Respeitando a associacao cod_cli para indice. Retornar zero se for bem sucedido.
 
-int RecebimentosRestantes(Cliente cliente);
-//Retornar quantos recebimentos novos sao possiveis.
+int proximoRecebimento(Cliente cliente);
+//Retornar posicao do proximo recebimento.
 
-void SubstituirRecebimento(Recebimento recebimento,unsigned int NumDoc);
+void substituirRecebimento(Recebimento recebimento,unsigned int NumDoc);
 //Substituir o documento novo pelo documento com o NumDoc atual.
 
-Recebimento CarregarRecebimento(unsigned int NumDoc);
+Recebimento carregarRecebimento(unsigned int NumDoc);
 //Devolver o recebimento correspondente.
 
-void CopiarRecebimento(Recebimento novoRecebimento,Recebimento antigoRecebimento);
-char *GerarNumDoc(Recebimento recebimento,Cliente cliente);
-//Descobrir quantos recebimentos restantes existem para o cliente.
-//Concatenar esse numero com o id do cliente, devolver resultado.
-int *IdDoDocumento(char *NumDoc);
+void copiarRecebimento(Recebimento novoRecebimento,Recebimento antigoRecebimento);
+
+int gerarNumDoc(Recebimento recebimento,Cliente cliente);
+//Descobrir qual a posicao do proximo recebimento, somar isso a id do cliente.
+//Resulta em indice na lista Recebimentos.
 
 #endif
