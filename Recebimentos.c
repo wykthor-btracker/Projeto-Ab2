@@ -3,14 +3,15 @@
 #include "Cliente.h"
 #include <stdio.h>
 //TODO
-Recebimento Recebimentos[30];
+Recebimento Recebimentos[30];//Solucao temporaria pra falta de uma lista global de structs
+
 Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRecebimento)
 {
 	antigoRecebimento->numeroDocumento = novoRecebimento->numeroDocumento;
 	antigoRecebimento->valorRecebimento = novoRecebimento->valorRecebimento;
 	antigoRecebimento->dataEmissao = novoRecebimento->dataEmissao;
 	antigoRecebimento->dataVencimento = novoRecebimento->dataVencimento;
-	antigoRecebimento->codigoCliente = novoRecebimento->codigoCliente;	
+	antigoRecebimento->codigoCliente = novoRecebimento->codigoCliente;
 	return(antigoRecebimento);
 }
 int salvarRecebimento(Recebimento recebimento,Cliente cliente)
