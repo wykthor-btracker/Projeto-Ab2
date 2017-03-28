@@ -10,6 +10,7 @@ struct recebimento {
 	Data dataEmissao;
 	Data dataVencimento;
 	unsigned int codigoCliente;
+	int flag;
 };
 
 typedef struct recebimento* Recebimento;

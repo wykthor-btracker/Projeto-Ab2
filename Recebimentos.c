@@ -3,6 +3,7 @@
 #include "Cliente.h"
 #include <stdio.h>
 //TODO
+Recebimento Recebimentos[30];
 Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRecebimento)
 {
 	antigoRecebimento->numeroDocumento = novoRecebimento->numeroDocumento;
@@ -12,6 +13,13 @@ Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRece
 	antigoRecebimento->codigoCliente = novoRecebimento->codigoCliente;	
 	return(antigoRecebimento);
 }
+int salvarRecebimento(Recebimento recebimento,Cliente cliente)
+{
+	 int id = gerarNumDoc(cliente);
+	 if(id == -1) return(0);
+	 Recebimentos[id] = copiarRecebimento(Recebimentos[id],recebimento);
+	 Recebimentos[id]->flag = 1;
+ }
 int proximoRecebimento(Cliente cliente)
 {
 	//Recebimentos eh uma lista global que contem em cada elemento uma struct do tipo Recebimento.
@@ -20,13 +28,15 @@ int proximoRecebimento(Cliente cliente)
 	int i,pos = 0;
 	for(i=0;i<2;i++)
 	{
-		if(Recebimentos[cliente->codigoCliente+i].flag == 1) pos++;
+		if(Recebimentos[cliente->codigoCliente+i]->flag == 1) pos++;
 	}
 	return(pos);
 }
 int gerarNumDoc(Cliente cliente)
 {
-	return(cliente->codigoCliente+ProximoRecebimento(cliente));
+	int pos = proximoRecebimento(cliente);
+	if(pos == 3) return -1;
+	return(cliente->codigoCliente+pos);
 }
 Recebimento carregarRecebimento(unsigned int NumDoc)
 {
