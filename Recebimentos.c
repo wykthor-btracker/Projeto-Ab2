@@ -33,7 +33,7 @@ Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRece
 
 int salvarRecebimento(Recebimento recebimento,Cliente cliente)
 {
-	 int id = gerarNumDoc(cliente);
+	 int id = registroDisponivel(cliente);
 	 if(id == -1) return(0);
 	 recebimentosLista[id] = copiarRecebimento(recebimentosLista[id],recebimento);
 	 recebimentosLista[id]->flag = 1;
