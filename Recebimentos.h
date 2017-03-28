@@ -18,10 +18,14 @@ void substituirRecebimento(Recebimento recebimento,unsigned int NumDoc);
 Recebimento carregarRecebimento(unsigned int NumDoc);
 //Devolver o recebimento correspondente.
 
+void carregarRecebimentosPorData(Data inicio,Data fim,Recebimento *recebimentosLista);
+//Carregar recebimentos por data.
+
 Recebimento copiarRecebimento(Recebimento novoRecebimento,Recebimento antigoRecebimento);
+//Copiar um recebimento em outro.
 
 int gerarNumDoc(Cliente cliente);
 //Descobrir qual a posicao do proximo recebimento, somar isso a id do cliente.
 //Resulta em indice na lista Recebimentos.
-
+void carregarRecebimentoPorCliente(Cliente cliente,Recebimento *recebimentos);
 #endif

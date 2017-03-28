@@ -2,9 +2,24 @@
 #include "Recebimento.h"
 #include "Cliente.h"
 #include <stdio.h>
+#include <stdlib.h>
 //TODO
 Recebimento recebimentosLista[30];//Solucao temporaria pra falta de uma lista global de structs
 
+void carregarRecebimentoPorCliente(Cliente cliente,Recebimento *recebimentos)
+{
+	int i;
+	for(i=0;i<2;i++)
+	{
+		copiarRecebimento(carregarRecebimento((cliente->codigoCliente) + i),recebimentos[i]);
+	}
+}	
+
+void carregarRecebimentosPorData(Data inicio,Data fim,Recebimento *recebimentosLista)
+{
+		//Alocar espaco suficiente pra lista, comparar datas dadas como parametros
+		//e retornar uma lista contendo todos os recebimentos requisitados.
+}
 Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRecebimento)
 {
 	antigoRecebimento->numeroDocumento = novoRecebimento->numeroDocumento;
@@ -12,15 +27,18 @@ Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRece
 	antigoRecebimento->dataEmissao = novoRecebimento->dataEmissao;
 	antigoRecebimento->dataVencimento = novoRecebimento->dataVencimento;
 	antigoRecebimento->codigoCliente = novoRecebimento->codigoCliente;
+	antigoRecebimento->flag = novoRecebimento->flag;
 	return(antigoRecebimento);
 }
+
 int salvarRecebimento(Recebimento recebimento,Cliente cliente)
 {
 	 int id = gerarNumDoc(cliente);
 	 if(id == -1) return(0);
 	 recebimentosLista[id] = copiarRecebimento(recebimentosLista[id],recebimento);
 	 recebimentosLista[id]->flag = 1;
- }
+}
+
 int proximoRecebimento(Cliente cliente)
 {
 	//Recebimentos eh uma lista global que contem em cada elemento uma struct do tipo Recebimento.
@@ -33,6 +51,7 @@ int proximoRecebimento(Cliente cliente)
 	}
 	return(pos);
 }
+
 int gerarNumDoc(Cliente cliente)
 {
 	int pos = proximoRecebimento(cliente);
@@ -43,3 +62,4 @@ Recebimento carregarRecebimento(unsigned int NumDoc)
 {
 	return(recebimentosLista[NumDoc]);
 }
+
