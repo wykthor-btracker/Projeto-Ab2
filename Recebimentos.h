@@ -19,6 +19,7 @@ void SubstituirRecebimento(Recebimento recebimento,unsigned int NumDoc);
 Recebimento CarregarRecebimento(unsigned int NumDoc);
 //Devolver o recebimento correspondente.
 
+void CopiarRecebimento(Recebimento novoRecebimento,Recebimento antigoRecebimento);
 char *GerarNumDoc(Recebimento recebimento,Cliente cliente);
 //Descobrir quantos recebimentos restantes existem para o cliente.
 //Concatenar esse numero com o id do cliente, devolver resultado.

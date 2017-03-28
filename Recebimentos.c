@@ -13,9 +13,9 @@ int RecebimentosRestantes(Cliente cliente)
 	}
 	return restantes;
 }
-void SubstituirRecebimento(Recebimento recebimento,unsigned int NumDoc)
+void CopiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRecebimento)
 {
-	Recebimentos[NumDoc] = recebimento;
+	
 }
 int main()
 {
