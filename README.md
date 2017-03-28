@@ -3,7 +3,7 @@
 #**Projeto de gerenciamento de uma distribuidora** 
 ## Contribuidores:
 ## Aurélio Buarque (https://github.com/ABuarque)
-## Pedro Soares 
+## Pedro Soares (https://github.com/pedrohsoares)
 ## Wykthor Cavalcante (https://github.com/wykthor-btracker)
 
 
@@ -27,7 +27,7 @@
 # **Tarefas específicas**
 ## Implementar arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 27/03) - ok
 ## Implementar arquivo Recebimento (Responsável: Pedro Soares; Deadline: 27/03)
-## Implementar arquivo Recebimentos (Responsável: Wykthor Cavalcante; Deadline: 28/03)
+## Implementar arquivo Recebimentos (Responsável: Wykthor Cavalcante; Deadline: 28/03) - ok
 
 ## Implementar tratamento de erros referentes ao arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 28/03)  - ok
 ## Implementar tratamento de erros referentes ao arquivo Recebimento (Responsável: Pedro Soares; Deadline: 28/03)

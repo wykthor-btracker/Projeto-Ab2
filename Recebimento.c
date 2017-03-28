@@ -8,5 +8,52 @@
 
 Recebimento novoRecebimento(unsigned int numeroDocumento,
 		float valorRecebimento,
-		String dataEmissao, String dataVencimento, 
-		unsigned int codigoCliente) {}
+		Data dataEmissao, Data dataVencimento, 
+		unsigned int codigoCliente) {
+
+	Recebimento recebimento = (Recebimento) malloc(sizeof(receb));
+	recebimento->numeroDocumento = numeroDocumento;
+	recebimento->valorRecebimento = valorRecebimento;
+	recebimento->dataEmissao = dataEmissao;
+	recebimento->dataVencimento = dataVencimento;
+	recebimento->codigoCliente = codigoCliente;
+
+	return recebimento;
+}
+
+int pegarNumDocumento(Recebimento recebimento){
+	return recebimento->numeroDocumento;
+}
+
+float pegarValorRecebimento(Recebimento recebimento){
+	return recebimento->valorRecebimento;
+}
+
+Data pegarDataEmissao(Recebimento recebimento){
+	return recebimento->dataEmissao;
+}
+
+Data pegarDataVencimento(Recebimento recebimento){
+	return recebimento->dataVencimento;
+}
+
+int pegarCodClienteRecebimento(Recebimento recebimento){
+	return recebimento->codigoCliente;
+}
+
+void mudarDataVencimento(Recebimento recebimento,Data dataVencimento){
+	recebimento->dataVencimento = dataVencimento;
+}
+
+void mudarDataEmissao(Recebimento recebimento, Data dataEmissao){
+	recebimento->dataEmissao = dataEmissao;
+}
+
+void mudarValorRecebimento(Recebimento recebimento, float valorRecebimento){
+	recebimento->valorRecebimento = valorRecebimento;
+}
+
+void destruirRecebimento(Recebimento recebimento){
+	free(recebimento);
+}
+
