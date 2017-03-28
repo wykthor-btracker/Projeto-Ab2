@@ -2,16 +2,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "dependencias/stringHandling.h"
+#include "ClienteExcecoes.h"
+#include <stdio_ext.h>
+
+#define DEBUG if(0)
 
 //TO GET OBJECT FILE (Cliente.o)
 //gcc -c Cliente.c
 
 Cliente novoCliente(String nome, String endereco, 
 	String telefone, unsigned int codigoCliente) {
+	DEBUG printf("Inside novoCliente()\n");
+	DEBUG printf("Creating new customer\n");
 	Cliente cliente = (Cliente) malloc(sizeof(tamanhoCliente));
-	copyString(cliente->nome, nome);
+
+	if(nomeValido(nome)) 
+		copyString(cliente->nome, nome);
+	else {
+		DEBUG printf("Given name is invalid: \'%s\'\n", nome);
+		printf("Nome fornecido é inválido. Digite novamente: \n");
+		scanf("%101[^\n]s", cliente->nome);
+		__fpurge(stdin);
+		DEBUG printf("New name: %s\n", cliente->nome);
+	}
+	if(telefoneValido(telefone))
+		copyString(cliente->telefone, telefone);
+	else {
+		DEBUG printf("Given telefone is invalid: \'%s\'\n", telefone);
+		printf("Telefone fornecido é inválido. Digite novamente: \n");
+		scanf("%12[^\n]s", cliente->telefone);
+		__fpurge(stdin);
+		DEBUG printf("New telefone: %s\n", cliente->telefone);	
+	}
 	copyString(cliente->endereco, endereco);
-	copyString(cliente->telefone, telefone);
 	cliente->codigoCliente = codigoCliente;
 	return cliente;
 }
@@ -33,7 +56,12 @@ int pegarCodigoCliente(Cliente cliente) {
 }
 
 void mudarNome(Cliente cliente, String novoNome) {
-	copyString(cliente->nome, novoNome);
+	if(!nomeValido(novoNome)) {
+		printf("Nome fornecido é inválido. Digite novamente: \n");
+		scanf("%101[^\n]s", cliente->nome);
+	} else {
+		copyString(cliente->nome, novoNome);
+	}
 }
 
 void mudarEndereco(Cliente cliente, String novoEndereco) {
@@ -41,7 +69,12 @@ void mudarEndereco(Cliente cliente, String novoEndereco) {
 }
 
 void mudarTelefone(Cliente cliente, String novoTelefone) {
-	copyString(cliente->telefone, novoTelefone);
+	if(!telefoneValido(novoTelefone)) {
+		printf("Telefone fornecido é inválido. Digite novamente: \n");
+		scanf("%12[^\n]s", cliente->telefone);
+	} else {
+		copyString(cliente->telefone, novoTelefone);	
+	}
 }
 
 void mudarCodigoCliente(Cliente cliente, 
