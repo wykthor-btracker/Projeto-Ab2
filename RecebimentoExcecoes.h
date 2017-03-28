@@ -5,7 +5,7 @@
 #include "dependencias/data.h"
 
 
-// 1 -- TRUE  0 -- FALSE
-int validaData(Data data);
+// 1 -- dataVencimento maior que dataEmissao  0 -- dataVencimento menor que dataEmissao
+int validarDataRecebimento(Data dataEmissao,Data dataVencimento);
 
 #endif

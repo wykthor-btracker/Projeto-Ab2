@@ -9,4 +9,7 @@ struct Data{
 
 typedef struct Data Data;
 
+int validaData(Data data);
+
+
 #endif
