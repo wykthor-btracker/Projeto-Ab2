@@ -2,12 +2,13 @@
 #define RECEBIMENTO_H
 
 #include "dependencias/stringHandling.h"
+#include "dependencias/data.h"
 
 struct recebimento {
 	unsigned int numeroDocumento;
 	float valorRecebimento;
-	char dataEmissao[11];
-	char dataVencimento[11];
+	Data dataEmissao;
+	Data dataVencimento;
 	unsigned int codigoCliente;
 };
 
@@ -16,26 +17,24 @@ typedef struct recebimento receb;
 
 Recebimento novoRecebimento(unsigned int numeroDocumento,
 		float valorRecebimento,
-		String dataEmissao, String dataVencimento, 
+		Data dataEmissao, Data dataVencimento, 
 		unsigned int codigoCliente);
 
 int pegarNumDocumento(Recebimento recebimento);
 
 float pegarValorRecebimento(Recebimento recebimento);
 
-String pegarDataEmissao(Recebimento recebimento);
+Data pegarDataEmissao(Recebimento recebimento);
 
-String pegarDataVencimento(Recebimento recebimento);
+Data pegarDataVencimento(Recebimento recebimento);
 
 int pegarCodClienteRecebimento(Recebimento recebimento);
 
-/*
-Recebimento buscarRecebimentoPorCliente(Cliente listCliente, String nomeCliente);
+void mudarDataVencimento(Recebimento recebimento,Data dataVencimento);
 
-Recebimento buscarRecebimentosporData(String dataInicio,String dataFinal);
+void mudarDataEmissao(Recebimento recebimento, Data dataEmissao);
 
-int verificarQtdRecebimentos(Cliente listCliente, unsigned int codigoCliente);
-*/
+void mudarValorRecebimento(Recebimento recebimento, float valorRecebimento);
 
 void destruirRecebimento(Recebimento recebimento);
 
