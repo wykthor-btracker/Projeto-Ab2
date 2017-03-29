@@ -32,3 +32,7 @@
 ## Implementar tratamento de erros referentes ao arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 28/03)  - ok
 ## Implementar tratamento de erros referentes ao arquivo Recebimento (Responsável: Pedro Soares; Deadline: 28/03) - ok
 ## Implementar tratamento de erros referentes ao arquivo Recebimentos (Responsável: Wykthor Cavalcante; Deadline: 28/03)
+
+## Implementar forma 1 de Recebimentos (Responsável: Aurelio Buarque; Deadline: 30/03)  - 
+## Implementar forma 2 de Recebimentos (Responsável: Wykthor Cavalcante; Deadline: 30/03) - 
+## Implementar dependencia CStream para arquivos em C (Responsável: Pedro Soares; Deadline: 30/03) - 
