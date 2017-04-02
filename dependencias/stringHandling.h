@@ -36,4 +36,7 @@ boolean isEqual(String, String);
 //Contatenate two strings
 String concat(String, String);
 
+//get a substring from begin till and icluding end
+String substring(String s, int begin, int end);
+
 #endif
