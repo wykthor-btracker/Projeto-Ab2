@@ -1,4 +1,4 @@
-#include "Recebimentosexcecoes.h"
+#include "RecebimentosExcecoes.h"
 #include "dependencias/stringHandling.h"
 #include <stdio.h>
 #include <stdlib.h>

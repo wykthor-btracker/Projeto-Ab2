@@ -1,9 +1,31 @@
 #include "Recebimentos.h"
 #include "Recebimento.h"
+#include "RecebimentoExcecoes.h"
 #include "Cliente.h"
 #include <stdio.h>
 #include <stdlib.h>
 //TODO
+void listarRecebimentos(int size, Recebimento *lista)
+{
+	FILE *fw;
+	int i;
+	lista = malloc(sizeof(receb)*size);
+	for(i=0;i<size;i++) lista[i] = malloc(sizeof(receb));
+	if((fw = fopen("recebimentos.dat","r+"))==NULL) printf("SHIT\n");
+	i = 0;
+	while(fscanf(fw,"%u %f %d/%d/%d %d/%d/%d %u %d",
+		&lista[i]->numeroDocumento,
+		&lista[i]->valorRecebimento,
+		&lista[i]->dataEmissao.dia,
+		&lista[i]->dataEmissao.mes,
+		&lista[i]->dataEmissao.ano,
+		&lista[i]->dataVencimento.dia,
+		&lista[i]->dataVencimento.mes,
+		&lista[i]->dataVencimento.ano,
+		&lista[i]->codigoCliente,
+		&lista[i]->flag)!=EOF) i++;
+	fclose(fw);
+}	
 Recebimento recebimentosLista[30];//Solucao temporaria pra falta de uma lista global de structs
 
 void carregarRecebimentoPorCliente(Cliente cliente,Recebimento *recebimentos)
@@ -37,6 +59,7 @@ int salvarRecebimento(Recebimento recebimento,Cliente cliente)
 	 if(id == -1) return(0);
 	 recebimentosLista[id] = copiarRecebimento(recebimentosLista[id],recebimento);
 	 recebimentosLista[id]->flag = 1;
+	 return 1;
 }
 
 int proximoRecebimento(Cliente cliente)

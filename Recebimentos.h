@@ -3,7 +3,10 @@
 
 #include "Recebimento.h"
 #include "Cliente.h"
+#include "RecebimentosExcecoes.h"
 //TODO
+void listarRecebimentos(int size, Recebimento *lista);
+//Carregar a lista completa de recebimentos.
 int salvarRecebimento(Recebimento recebimento,Cliente cliente);
 //Ler arquivo, checar se o limite de recebimentos foi alcancado, caso nao,
 //Encontrar lugar na lista em que o recebimento deve ser adicionado,
