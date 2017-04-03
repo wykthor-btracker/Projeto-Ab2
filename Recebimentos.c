@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //TODO
-void listarRecebimentos(int size, Recebimento *lista)
+Recebimento *listarRecebimentos(int size, Recebimento *lista)
 {
 	FILE *fw;
 	int i;
@@ -25,6 +25,7 @@ void listarRecebimentos(int size, Recebimento *lista)
 		&lista[i]->codigoCliente,
 		&lista[i]->flag)!=EOF) i++;
 	fclose(fw);
+	return(lista);
 }	
 Recebimento recebimentosLista[30];//Solucao temporaria pra falta de uma lista global de structs
 
