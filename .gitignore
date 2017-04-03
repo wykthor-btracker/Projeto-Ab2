@@ -1,0 +1,4 @@
+*.o
+App.c
+App
+*.dat
