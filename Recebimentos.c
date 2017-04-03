@@ -7,13 +7,13 @@
 //TODO
 Recebimento *listarRecebimentos(int size, Recebimento *recebimentos)
 {
-	FILE *fw;
+	FILE *leitorArquivo;
 	int i;
 	recebimentos = malloc(sizeof(receb)*size);
 	for(i=0;i<size;i++) recebimentos[i] = malloc(sizeof(receb));
-	if((fw = fopen("recebimentos.dat","r+"))==NULL) printf("SHIT\n");
+	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read.\n");
 	i = 0;
-	while(fscanf(fw,"%u %f %d/%d/%d %d/%d/%d %u %d",
+	while(fscanf(leitorArquivo,"%u %f %d/%d/%d %d/%d/%d %u %d",
 		&recebimentos[i]->numeroDocumento,
 		&recebimentos[i]->valorRecebimento,
 		&recebimentos[i]->dataEmissao.dia,
@@ -24,9 +24,31 @@ Recebimento *listarRecebimentos(int size, Recebimento *recebimentos)
 		&recebimentos[i]->dataVencimento.ano,
 		&recebimentos[i]->codigoCliente,
 		&recebimentos[i]->flag)!=EOF) i++;
-	fclose(fw);
+	fclose(leitorArquivo);
 	return(recebimentos);
 }	
+int salvarRecebimentosArquivo(Recebimento *recebimentos,int size)
+{
+	FILE *escritorArquivo;
+	int i;
+	escritorArquivo = fopen("recebimentos.dat","w");
+	for(i=0;i<size;i++)
+	{
+		fprintf(escritorArquivo,"\n%u\n%f\n%d/%d/%d\n%d/%d/%d\n%u\n%d\n",
+			recebimentos[i]->numeroDocumento,
+			recebimentos[i]->valorRecebimento,
+			recebimentos[i]->dataEmissao.dia,
+			recebimentos[i]->dataEmissao.mes,
+			recebimentos[i]->dataEmissao.ano,
+			recebimentos[i]->dataVencimento.dia,
+			recebimentos[i]->dataVencimento.mes,
+			recebimentos[i]->dataVencimento.ano,
+			recebimentos[i]->codigoCliente,
+			recebimentos[i]->flag);
+	}
+	fclose(escritorArquivo);
+	return 1;
+}
 Recebimento recebimentosLista[30];//Solucao temporaria pra falta de uma lista global de structs
 
 Recebimento *carregarRecebimentoPorCliente(Cliente cliente,Recebimento *recebimentos,Recebimento *recebimentosLista)
@@ -72,7 +94,7 @@ int proximoRecebimento(Cliente cliente,Recebimento *recebimentosLista)
 	//E o indice do recebimento corresponde a seu cliente e sua posicao na lista de recebimentos, ex:
 	//cliente 2, recebimento 2, id = 2+2 = 4, esse recebimento estara na posicao 4 da lista Recebimentos.	
 	int i,pos = 0;
-	for(i=0;i<2;i++)
+	for(i=0;i<3;i++)
 	{
 		if(recebimentosLista[cliente->codigoCliente+i]->flag == 1) pos++;
 	}
@@ -85,6 +107,7 @@ int gerarNumDoc(Cliente cliente,Recebimento *recebimentosLista)
 	if(pos == 3) return -1;
 	return(cliente->codigoCliente+pos);
 }
+
 Recebimento carregarRecebimento(unsigned int NumDoc,Recebimento *recebimentosLista)
 {
 	return(recebimentosLista[NumDoc]);

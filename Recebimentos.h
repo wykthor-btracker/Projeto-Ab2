@@ -21,6 +21,8 @@ void substituirRecebimento(Recebimento recebimento,unsigned int NumDoc);
 Recebimento carregarRecebimento(unsigned int NumDoc,Recebimento *recebimentosLista);
 //Devolver o recebimento correspondente.
 
+int salvarRecebimentosArquivo(Recebimento *lista,int size);
+//Salvar lista de recebimentos para o arquivo.
 Recebimento *carregarRecebimentosPorData(Data inicio,Data fim,Recebimento *recebimentosLista);
 //Carregar recebimentos por data.
 
