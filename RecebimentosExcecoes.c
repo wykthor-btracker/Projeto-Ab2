@@ -6,13 +6,13 @@
 #include "Recebimentos.h"
 #define DEBUG if(0)
 
-int registroDisponivel(Cliente cliente)
+int registroDisponivel(Cliente cliente,Recebimento *recebimentosLista)
 {
-	if(gerarNumDoc(cliente)==-1)
+	if(gerarNumDoc(cliente,recebimentosLista)==-1)
 	{
 		return -1;
 	}
-	else return gerarNumDoc(cliente);
+	else return gerarNumDoc(cliente,recebimentosLista);
 }
 
 //int numeroDocumentoValido(unsigned int numDoc);
