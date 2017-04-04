@@ -7,6 +7,7 @@
 //TODO
 Recebimento *listarRecebimentos(int size, Recebimento *lista);
 //Carregar a lista completa de recebimentos.
+
 int salvarRecebimento(Recebimento recebimento,Cliente cliente,Recebimento *recebimentosLista);
 //Ler arquivo, checar se o limite de recebimentos foi alcancado, caso nao,
 //Encontrar lugar na lista em que o recebimento deve ser adicionado,
