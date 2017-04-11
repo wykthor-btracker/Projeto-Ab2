@@ -7,7 +7,7 @@
 # define the C compiler to use
 CC = gcc
 # define any compile-time flags
-CFLAGS =-g -std=c99
+CFLAGS = -Wall -g -std=c99
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
@@ -45,5 +45,9 @@ clean:
 		$(RM) *.o *~ $(MAIN)
 depend: $(SRCS)
 		makedepend $(INCLUDES) $^
+<<<<<<< HEAD
 # DO NOT DELETE THIS LINE -- make depend needs
 		
+=======
+# DO NOT DELETE THIS LINE -- make depend needs it
+>>>>>>> 9e8336bececb5b6f3ed4a271113dc40372217120
