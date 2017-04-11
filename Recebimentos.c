@@ -11,7 +11,7 @@ Recebimento *listarRecebimentos(Recebimento *recebimentos,int *tamanhoLista)
 	int i = 0,tamanho = 1;
 	recebimentos = malloc(sizeof(receb)*tamanho);
 	recebimentos[i] = malloc(sizeof(receb));
-	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read.\n");
+	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read recebimentos.dat .\n");
 	while(fscanf(leitorArquivo,"%u %f %d/%d/%d %d/%d/%d %u %d",
 		&recebimentos[i]->numeroDocumento,
 		&recebimentos[i]->valorRecebimento,
@@ -155,7 +155,7 @@ int salvarClientes(Cliente *clientes,int tamanho)
 {
 	FILE *escritor;
 	int i;
-	escritor = fopen("cliente.dat","w");
+	if(escritor = fopen("cliente.dat","w")==NULL) printf("Fail to read cliente.dat\n");
 	for(i=0;i<tamanho;i++)
 	{
 		fprintf(escritor,"%s %s %s %d %d\n",

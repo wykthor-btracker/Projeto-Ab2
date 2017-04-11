@@ -45,9 +45,5 @@ clean:
 		$(RM) *.o *~ $(MAIN)
 depend: $(SRCS)
 		makedepend $(INCLUDES) $^
-<<<<<<< HEAD
-# DO NOT DELETE THIS LINE -- make depend needs
-		
-=======
 # DO NOT DELETE THIS LINE -- make depend needs it
->>>>>>> 9e8336bececb5b6f3ed4a271113dc40372217120
+
