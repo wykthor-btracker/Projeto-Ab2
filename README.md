@@ -38,3 +38,5 @@
 ## Implementar dependencia CStream para arquivos em C (Responsável: Pedro Soares; Deadline: 14/04) - 
 
 ## Criar e adicionar Makefile para o projeto (Responsável: Wykthor Cavalcante; Deadline: 02/04) - ok 
+
+## Implementar interface de usuário (Responsável: Aurelio Buarque; Deadline: 16/05)  - 
