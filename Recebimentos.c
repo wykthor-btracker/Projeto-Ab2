@@ -130,7 +130,7 @@ Recebimento carregarRecebimento(unsigned int NumDoc,Recebimento *recebimentosLis
 Cliente *listaCliente(Cliente *lista,int* tamanhoListaClientes)
 {
 	FILE *leitor;
-	int i = 0,tamanho = 2;
+	int i = 0,tamanho = 2;//Tamanho da lista deve ser maior que o numero de elementos por causa de um bug nao resolvido com fscanf.
 	lista = malloc(sizeof(tamanhoCliente)*tamanho);
 	lista[i] = malloc(sizeof(tamanhoCliente));
 	if((leitor = fopen("cliente.dat","r"))==NULL)printf("Not able to open file");
