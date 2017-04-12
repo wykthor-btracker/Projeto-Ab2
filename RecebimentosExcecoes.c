@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include "Cliente.h"
 #include "Recebimentos.h"
+#ifndef	DEBUG
 #define DEBUG if(0)
-
+#endif
 int registroDisponivel(Cliente cliente,Recebimento *recebimentosLista)
 {
 	if(gerarNumDoc(cliente,recebimentosLista)==-1)
