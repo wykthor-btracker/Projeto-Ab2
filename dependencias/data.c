@@ -1,7 +1,8 @@
 #include "data.h"
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
-
+#include <time.h>
 
 // 1 -- TRUE 0 -- FALSE
 int validaData(Data data){
@@ -15,6 +16,71 @@ int validaData(Data data){
 				return 1;
 		}
 	}
+
+	return 0;
+}
+
+void trocarDatas(Data *data1, Data *data2){
+	Data aux;
+
+	aux.dia = data1->dia;
+	aux.mes = data1->mes;
+	aux.ano = data1->ano;
+
+	data1->dia = data2->dia;
+	data1->mes = data2->mes;
+	data1->ano = data2->ano;
+
+	data2->dia = aux.dia;
+	data2->mes = aux.mes;
+	data2->ano = aux.ano;
+}
+
+void ordenarDatas(Data *data1, Data *data2){
+	Data aux;
+
+	if(data1->ano > data2->ano){
+		trocarDatas(data1,data2);
+	}else if(data1->ano == data2->ano){
+		if(data1->mes > data2->mes){
+			trocarDatas(data1,data2);
+		}else if(data1->mes == data2->mes){
+			if(data1->dia > data2->dia){
+				trocarDatas(data1,data2);
+			}
+		}
+	}
+}
+
+Data pegarDataAtual(){
+	time_t t = time(NULL);
+  	struct tm* pointer = localtime(&t);
+  	Data data;
+
+  	data.dia = pointer->tm_mday;
+  	data.mes = pointer->tm_mon+1;
+  	data.ano = pointer->tm_year+1900;
+
+  	return data;
+}
+
+int calcDiferencaDatas(Data data){
+	time_t diaAtual;
+	struct tm dataDesejada;
+	double segundos;
+
+	time(&diaAtual);
+	
+	dataDesejada = *localtime(&diaAtual);
+
+	dataDesejada.tm_mday = data.dia;
+	dataDesejada.tm_mon = data.mes-1;
+	dataDesejada.tm_year = data.ano-1900;
+
+	int dias = difftime(diaAtual,mktime(&dataDesejada)) / 86400;
+
+	if(dias > 0)
+		return abs(dias);
 
 	return 0;
 }

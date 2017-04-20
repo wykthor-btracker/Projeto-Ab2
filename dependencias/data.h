@@ -11,5 +11,12 @@ typedef struct Data Data;
 
 int validaData(Data data);
 
+void trocarDatas(Data *data1,Data *data2);
+
+void ordenarData(Data data1, Data data2);
+
+Data pegarDataAtual();
+
+int calcDiferencaDatas(Data data);
 
 #endif
