@@ -66,7 +66,8 @@ void inserirNovoCliente() {
 			printf("codigoCliente: %u\n", pegarCodigoCliente(clientes[i]));
 		}
 	}
-	int gravacaoOk = salvarClients(clientes, numeroClientes);
+	//O PROBMELA EH AQUI
+	//int gravacaoOk = salvarClients(clientes, numeroClientes);
 	for(i = 0; i < numeroClientes; i++)
 		destruirCliente(clientes[i]);
 }
