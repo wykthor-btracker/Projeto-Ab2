@@ -199,7 +199,7 @@ Cliente *listaCliente(Cliente *lista,int* tamanhoListaClientes)
 	lista = malloc(sizeof(tamanhoCliente)*tamanho);
 	lista[i] = malloc(sizeof(tamanhoCliente));
 	if((leitor = fopen("cliente.dat","r"))==NULL)printf("Not able to open file");
-	while((fscanf(leitor,"%s %s %s %d %d",
+	while((fscanf(leitor," %[^\n] %[^\n] %[^\n] %d %d",
 		lista[i]->nome,
 		lista[i]->endereco,
 		lista[i]->telefone,
@@ -223,7 +223,7 @@ int salvarClientes(Cliente *clientes,int tamanho)
 	if((escritor = fopen("cliente.dat","w"))==NULL) printf("Fail to write on cliente.dat\n");
 	for(i=0;i<tamanho;i++)
 	{
-		fprintf(escritor,"%s %s %s %d %d\n",
+		fprintf(escritor,"%s\n%s\n%s\n%d\n%d\n",
 				clientes[i]->nome,
 				clientes[i]->endereco,
 				clientes[i]->telefone,
