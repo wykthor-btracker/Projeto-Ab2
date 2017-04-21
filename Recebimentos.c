@@ -2,6 +2,7 @@
 #include "Recebimento.h"
 #include "RecebimentoExcecoes.h"
 #include "Cliente.h"
+#include "dependencias/data.h"
 #include <stdio.h>
 #include <stdlib.h>
 //TODO
@@ -219,7 +220,7 @@ int salvarClientes(Cliente *clientes,int tamanho)
 {
 	FILE *escritor;
 	int i;
-	if(escritor = fopen("cliente.dat","w")==NULL) printf("Fail to read cliente.dat\n");
+	if((escritor = fopen("cliente.dat","w"))==NULL) printf("Fail to write on cliente.dat\n");
 	for(i=0;i<tamanho;i++)
 	{
 		fprintf(escritor,"%s %s %s %d %d\n",

@@ -11,7 +11,7 @@
 #include <locale.h>
 #include <ctype.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 void cabecalho() {
 	printf("|---------------------------------------------------------------------------------------|\n");
@@ -66,8 +66,9 @@ void inserirNovoCliente() {
 			printf("codigoCliente: %u\n", pegarCodigoCliente(clientes[i]));
 		}
 	}
-	//O PROBMELA EH AQUI
-	//int gravacaoOk = salvarClients(clientes, numeroClientes);
+	//O PROBLEMA EH AQUI
+	int gravacaoOk = salvarClientes(clientes, numeroClientes);
+	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
 	for(i = 0; i < numeroClientes; i++)
 		destruirCliente(clientes[i]);
 }
