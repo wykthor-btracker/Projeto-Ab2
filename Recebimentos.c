@@ -2,6 +2,7 @@
 #include "Recebimento.h"
 #include "RecebimentoExcecoes.h"
 #include "Cliente.h"
+#include "dependencias/data.h"
 #include <stdio.h>
 #include <stdlib.h>
 //TODO
@@ -11,7 +12,7 @@ Recebimento *listarRecebimentos(Recebimento *recebimentos,int *tamanhoLista)
 	int i = 0,tamanho = 1;
 	recebimentos = malloc(sizeof(receb)*tamanho);
 	recebimentos[i] = malloc(sizeof(receb));
-	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read.\n");
+	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read recebimentos.dat .\n");
 	while(fscanf(leitorArquivo,"%u %f %d/%d/%d %d/%d/%d %u %d",
 		&recebimentos[i]->numeroDocumento,
 		&recebimentos[i]->valorRecebimento,
@@ -33,7 +34,6 @@ Recebimento *listarRecebimentos(Recebimento *recebimentos,int *tamanhoLista)
 	fclose(leitorArquivo);
 	return(recebimentos);
 }
-
 int salvarRecebimentosArquivo(Recebimento *recebimentos,int tamanho)
 {
 	FILE *escritorArquivo;
@@ -220,7 +220,7 @@ int salvarClientes(Cliente *clientes,int tamanho)
 {
 	FILE *escritor;
 	int i;
-	escritor = fopen("cliente.dat","w");
+	if((escritor = fopen("cliente.dat","w"))==NULL) printf("Fail to write on cliente.dat\n");
 	for(i=0;i<tamanho;i++)
 	{
 		fprintf(escritor,"%s %s %s %d %d\n",
@@ -242,3 +242,4 @@ Cliente *atualizarClientes(int extra,Cliente *clientesLista,int *tamanhoListaCli
 	*tamanhoListaCliente = (tamanho-1)+extra;
 	return clientesLista;
 }
+
