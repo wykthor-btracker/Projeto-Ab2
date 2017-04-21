@@ -13,7 +13,7 @@ int validaData(Data data);
 
 void trocarDatas(Data *data1,Data *data2);
 
-void ordenarData(Data data1, Data data2);
+void ordenarDatas(Data *data1, Data *data2);
 
 Data pegarDataAtual();
 

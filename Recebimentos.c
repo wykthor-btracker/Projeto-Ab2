@@ -198,20 +198,22 @@ Cliente *listaCliente(Cliente *lista,int* tamanhoListaClientes)
 	int i = 0,tamanho = 2;//Tamanho da lista deve ser maior que o numero de elementos por causa de um bug nao resolvido com fscanf.
 	lista = malloc(sizeof(tamanhoCliente)*tamanho);
 	lista[i] = malloc(sizeof(tamanhoCliente));
-	if((leitor = fopen("cliente.dat","r"))==NULL)printf("Not able to open file");
-	while((fscanf(leitor," %[^\n] %[^\n] %[^\n] %d %d",
-		lista[i]->nome,
-		lista[i]->endereco,
-		lista[i]->telefone,
-		&lista[i]->codigoCliente,
-		&lista[i]->contador))!=EOF)
-		{
-			i++;
-			tamanho++;
-			lista = realloc(lista,sizeof(tamanhoCliente)*tamanho);
-			lista[i] = malloc(sizeof(tamanhoCliente));
-		}
-	fclose(leitor);
+	if((leitor = fopen("cliente.dat","r"))!=NULL)
+	{
+		while((fscanf(leitor," %[^\n] %[^\n] %[^\n] %d"/* %d"*/,
+			lista[i]->nome,
+			lista[i]->endereco,
+			lista[i]->telefone,
+			&lista[i]->codigoCliente)
+			/*&lista[i]->contador)*/!=EOF))
+			{
+				i++;
+				tamanho++;
+				lista = realloc(lista,sizeof(tamanhoCliente)*tamanho);
+				lista[i] = malloc(sizeof(tamanhoCliente));
+			}
+		fclose(leitor);	
+	}
 	*tamanhoListaClientes = i;
 	return(lista);	
 }
@@ -223,12 +225,12 @@ int salvarClientes(Cliente *clientes,int tamanho)
 	if((escritor = fopen("cliente.dat","w"))==NULL) printf("Fail to write on cliente.dat\n");
 	for(i=0;i<tamanho;i++)
 	{
-		fprintf(escritor,"%s\n%s\n%s\n%d\n%d\n",
+		fprintf(escritor,"%s\n%s\n%s\n%d\n"/*%d\n"*/,
 				clientes[i]->nome,
 				clientes[i]->endereco,
 				clientes[i]->telefone,
-				clientes[i]->codigoCliente,
-				clientes[i]->contador+1);
+				clientes[i]->codigoCliente)/*,
+				clientes[i]->contador+1);*/;
 	}
 	fclose(escritor);
 	return 0;
