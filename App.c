@@ -45,10 +45,6 @@ void inserirNovoCliente() {
 		printf("Telefone >>> ");
 		scanf("%[^\n]", telefone);
 		getchar();
-		/*unsigned int codigoCliente;
-		printf("Codigo >>> ");
-		scanf("%u", &codigoCliente);
-		getchar();*/
 		unsigned int codigoCliente = *indice;		
 		(*indice)++;
 		clientes[i] = novoCliente(nome, endereco, telefone, codigoCliente);
@@ -70,8 +66,6 @@ void inserirNovoCliente() {
 	DEBUG printf("Numero de entradas a serem salvas:%d\n",*indice);
 	int gravacaoOk = salvarClientes(clientes, (*indice));
 	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
-	/*for(i = 0; i < numeroClientes; i++)
-		destruirCliente(clientes[i]);*/
 }
 
 void inserirNovoRecebimento() {
