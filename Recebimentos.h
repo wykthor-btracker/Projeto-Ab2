@@ -47,4 +47,7 @@ int salvarClientes(Cliente *clientes,int tamanho);
 
 Cliente *atualizarClientes(int extra,Cliente *clientesLista,int *tamanhoListaCliente);
 //Re-ajustar tamanho da lista de clientes.
+
+int atualizarCliente(Cliente* listaClientes, int tamanhoList, Cliente cliente);
+
 #endif

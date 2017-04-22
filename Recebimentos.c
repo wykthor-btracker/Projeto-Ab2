@@ -5,6 +5,9 @@
 #include "dependencias/data.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#define DEBUG if(1)
+
 //TODO
 Recebimento *listarRecebimentos(Recebimento *recebimentos,int *tamanhoLista)
 {
@@ -244,3 +247,20 @@ Cliente *atualizarClientes(int extra,Cliente *clientesLista,int *tamanhoListaCli
 	return clientesLista;
 }
 
+int atualizarCliente(Cliente* listaClientes, int tamanhoLista, Cliente cliente) {
+	/*
+		So um atributo nunca muda mesmo alterando dados do cliente, o codigo.
+		Por isso esse loop busca na lista de clientes o clinete para ser mudado pelo codigo.
+		Achou, iguale e depois salve a lista;
+	*/
+	int i;
+	for(i = 0; i < tamanhoLista; i++)
+		if(listaClientes[i]->codigoCliente == cliente->codigoCliente) {
+			listaClientes[i] = cliente;
+			break;
+		}
+
+	int gravacaoOk = salvarClientes(listaClientes, tamanhoLista);
+	if(!gravacaoOk) DEBUG printf("Gravacao ok.\n");
+	else DEBUG printf("Gravacao falhou.\n");
+}
