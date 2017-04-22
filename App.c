@@ -22,17 +22,16 @@ void cabecalho() {
 }
 
 void inserirNovoCliente() {
-	int numeroClientes, i;
+	int numeroClientes, i,val_indice,*indice = &val_indice,tamanhoBase,*pTamanho = &tamanhoBase;
 	printf("Quantos clientes deseja adicionar? ");
 	scanf("%d", &numeroClientes);
 	getchar();
-	Cliente* clientes = (Cliente*) 
-			malloc(sizeof(Cliente) * numeroClientes); 
-	//alocando o espaco de cada obj cliente para depois usar
-	for(i = 0; i < numeroClientes; i++)
-		clientes[i] = (Cliente) malloc(sizeof(tamanhoCliente));
-
-	for(i = 0; i < numeroClientes; i++) {
+	Cliente* clientes = listaCliente(clientes,indice);
+	DEBUG printf("Numero de entradas ja existentes:%d\n",*indice);
+	atualizarClientes(numeroClientes,clientes,pTamanho);
+	DEBUG printf("Indice novo:%d\n",*indice);
+	int tamanho = *indice;
+	for(i = tamanho; i < numeroClientes+tamanho; i++) {
 		printf("Dados do cliente: \n");
 		char nome[101];
 		printf("Nome >>> ");
@@ -46,10 +45,8 @@ void inserirNovoCliente() {
 		printf("Telefone >>> ");
 		scanf("%[^\n]", telefone);
 		getchar();
-		unsigned int codigoCliente;
-		printf("Codigo >>> ");
-		scanf("%u", &codigoCliente);
-		getchar();
+		unsigned int codigoCliente = *indice;		
+		(*indice)++;
 		clientes[i] = novoCliente(nome, endereco, telefone, codigoCliente);
 		DEBUG {
 			printf("Dados: \n");
@@ -66,11 +63,9 @@ void inserirNovoCliente() {
 			printf("codigoCliente: %u\n", pegarCodigoCliente(clientes[i]));
 		}
 	}
-	//O PROBLEMA EH AQUI
-	int gravacaoOk = salvarClientes(clientes, numeroClientes);
+	DEBUG printf("Numero de entradas a serem salvas:%d\n",*indice);
+	int gravacaoOk = salvarClientes(clientes, (*indice));
 	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
-	for(i = 0; i < numeroClientes; i++)
-		destruirCliente(clientes[i]);
 }
 
 void inserirNovoRecebimento() {
