@@ -17,27 +17,6 @@ Recebimento* recebimentosLista = NULL; //EH INICIADO NO MAIN
 int recebTamaho, *pRecebeTamanho = &recebTamaho; //TAMANHO DESSA LISTA
 //Cliente* clientes = NULL;
 
-
-//FORNECE UM RECEBIMENTO VAZIO
-Recebimento recebimentoVazio(int id) {
-	Recebimento rec = (Recebimento) malloc(sizeof(receb));
-	rec->numeroDocumento = 0;
-	rec->valorRecebimento = 0;
-	Data dataEmissaoVazia, dataVencimentoVazia;
-	dataEmissaoVazia.dia = 1;
-	dataEmissaoVazia.mes = 1;
-	dataEmissaoVazia.ano = 1997;
-	dataVencimentoVazia.dia = 10;
-	dataVencimentoVazia.mes = 1;
-	dataVencimentoVazia.ano = 1997;
-	rec->dataEmissao = dataVencimentoVazia;
-	rec->dataVencimento = dataEmissaoVazia;
-	rec->codigoCliente = id;
-	rec->flag = 0;
-	return rec;
-}
-
-
 void cabecalho() {
 	printf("|---------------------------------------------------------------------------------------------------|\n");
 	printf("|                                         RECEBIMENTOS EMPRESA                                      |\n");
@@ -89,9 +68,10 @@ void inserirNovoCliente() {
 		}
 	}
 	DEBUG printf("Numero de entradas a serem salvas:%d\n",*indice);
+	//GRAVANDO O OBJET
 	int gravacaoOk = salvarClientes(clientes, (*indice));
-
 	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
+
 }
 
 void inserirNovoRecebimento() {
