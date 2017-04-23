@@ -11,14 +11,39 @@
 #include <locale.h>
 #include <ctype.h>
 
-#define DEBUG if(0)
+#define DEBUG if(1)
+
+Recebimento* recebimentosLista = NULL; //EH INICIADO NO MAIN
+int recebTamaho, *pRecebeTamanho = &recebTamaho; //TAMANHO DESSA LISTA
+//Cliente* clientes = NULL;
+
+
+//FORNECE UM RECEBIMENTO VAZIO
+Recebimento recebimentoVazio(int id) {
+	Recebimento rec = (Recebimento) malloc(sizeof(receb));
+	rec->numeroDocumento = 0;
+	rec->valorRecebimento = 0;
+	Data dataEmissaoVazia, dataVencimentoVazia;
+	dataEmissaoVazia.dia = 1;
+	dataEmissaoVazia.mes = 1;
+	dataEmissaoVazia.ano = 1997;
+	dataVencimentoVazia.dia = 10;
+	dataVencimentoVazia.mes = 1;
+	dataVencimentoVazia.ano = 1997;
+	rec->dataEmissao = dataVencimentoVazia;
+	rec->dataVencimento = dataEmissaoVazia;
+	rec->codigoCliente = id;
+	rec->flag = 0;
+	return rec;
+}
+
 
 void cabecalho() {
-	printf("|---------------------------------------------------------------------------------------|\n");
-	printf("|                                   RECEBIMENTOS EMPRESA                                |\n");
-	printf("|                                     GNU-GLP license                                   |\n");
-	printf("|                                   [version 1.0 - 2017]                                |\n"); 
-	printf("|---------------------------------------------------------------------------------------|\n");
+	printf("|---------------------------------------------------------------------------------------------------|\n");
+	printf("|                                         RECEBIMENTOS EMPRESA                                      |\n");
+	printf("|                                           GNU-GLP license                                         |\n");
+	printf("|                                         [version 1.0 - 2017]                                      |\n"); 
+	printf("|---------------------------------------------------------------------------------------------------|\n");
 }
 
 void inserirNovoCliente() {
@@ -65,15 +90,107 @@ void inserirNovoCliente() {
 	}
 	DEBUG printf("Numero de entradas a serem salvas:%d\n",*indice);
 	int gravacaoOk = salvarClientes(clientes, (*indice));
+
 	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
 }
 
 void inserirNovoRecebimento() {
-	printf("2\n");
+	printf("Já possui cadastro? (S/N) ");
+	char resposta;
+	scanf("%c", &resposta);
+	getchar();
+	resposta = toupper(resposta);
+	if(resposta == 'S') {
+		Cliente cliente = NULL;
+		printf("Informe o código do cliente: ");
+		int codigo;
+		scanf("%d", &codigo);
+		getchar();
+		int tamanhoLista, *tamanhoPointer = &tamanhoLista, i;
+		Cliente* clientes = listaCliente(clientes, tamanhoPointer);
+		for(i = 0; i < tamanhoLista; i++) {
+			if(clientes[i]->codigoCliente == codigo) {
+				cliente = clientes[i];
+			}
+		}
+		//mas pode ocorrer dele se esquecer na hora ou digitar um numero errado ou ate msm um numero q n existe
+		if(cliente == NULL) inserirNovoRecebimento();
+		DEBUG {
+			printf("Dados cliente encontrado:\n");
+			printf("Name: %s\n", pegarNome(cliente));
+			printf("Telefone: %s\n", pegarTelefone(cliente));
+			printf("Endereco: %s\n", pegarEndereco(cliente));
+			printf("Codigo cliente: %d\n", pegarCodigoCliente(cliente));
+		}
+		int numeroDocumento = gerarNumDoc(cliente, recebimentosLista);
+		if(numeroDocumento == -1)
+			printf("Cliente já possui três recebimentos e não é possível inserir mais.\n");
+		else {
+			//fazer recebimento
+		}
+	} else {
+		//cadastra cliente e faz o recebimento
+		inserirNovoCliente();
+		inserirNovoRecebimento();
+	}
 }
 
 void alterarCadastroDeCliente() {
-	printf("3\n");
+	printf("Insira o código do cliente: ");
+	int codigo, tamanho, *tamanhoPointer = &tamanho, i, posicaoDoCliente = 0;
+	scanf("%d", &codigo);
+	getchar();
+	Cliente cliente = NULL;
+	Cliente* clientes = listaCliente(clientes, tamanhoPointer);
+	for(i = 0; i < tamanho; i++) {
+		if(clientes[i]->codigoCliente == codigo) {
+			cliente = clientes[i];
+			break;
+		}
+		posicaoDoCliente++;
+	}
+	DEBUG printf("Posicao do cliente: %d\n", posicaoDoCliente);
+	//caso nao achou
+	if(cliente == NULL) alterarCadastroDeCliente();
+	printf("Escolha o que deseja alterar:\n");
+	printf("	(1) Nome.\n");
+	printf("	(2) Endereço.\n");
+	printf("	(3) Telefone.\n");
+	printf(">>> ");
+	char opcao;
+	scanf("%c", &opcao);
+	getchar();
+	char nome[101];
+	char endereco[201];
+	char telefone[12];
+	switch(opcao) {
+		case '1' :
+			printf("Digite o nome do cliente: ");
+			scanf("%[^\n]", nome);
+			getchar();
+			mudarNome(cliente, nome);
+			break;
+		case '2' :
+			printf("Digite o Endereço: ");
+			scanf("%[^\n]", endereco);
+			getchar();
+			mudarEndereco(cliente, endereco);
+			break;
+		case '3' :
+			printf("Digite o telefone: ");
+			scanf("%[^\n]", telefone);
+			getchar();
+			mudarTelefone(cliente, telefone);
+			break;
+		default :
+			printf("Opção inválida.\n");
+			alterarCadastroDeCliente();
+			break;
+	}
+	//salve a alteracao
+	int atualizacaoOk = atualizarCliente(clientes, tamanho, cliente);
+	if(!atualizacaoOk) DEBUG printf("Gravacao funcionou.\n");
+	else DEBUG printf("Gravacao falhou.\n");
 }
 
 void buscarRecebimentoPorData() {
@@ -82,14 +199,15 @@ void buscarRecebimentoPorData() {
 
 void menuPrincipal() {
 	printf("Digite uma das opções: \n");
-	printf("	(1) Inserir novo cliente.\n");
+	printf("	(1) Inserir novo cliente.\n"); //ok
 	printf("	(2) Inserir novo recebimento.\n");
-	printf("	(3) Alterar cadastro do cliente.\n");
+	printf("	(3) Alterar cadastro do cliente.\n"); //ok
 	printf("	(4) Buscar recebimentos por data.\n");
 	printf("	(5) Encerrar programa.\n");
 }
 
 int main() {
+	recebimentosLista = listarRecebimentos(recebimentosLista, pRecebeTamanho);
 	system("clear");
 	setlocale(LC_ALL, "Portuguese");
 	char desligar = 'n';
