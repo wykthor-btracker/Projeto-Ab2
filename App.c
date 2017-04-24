@@ -13,9 +13,9 @@
 
 #define DEBUG if(1)
 
-Recebimento* recebimentosLista = NULL; //EH INICIADO NO MAIN
-int recebTamaho, *pRecebeTamanho = &recebTamaho; //TAMANHO DESSA LISTA
-//Cliente* clientes = NULL;
+int clients = 0; //sempre q preciso atualize
+
+Recebimentos gerenciadorLista; //lista global de recebimentos
 
 void cabecalho() {
 	printf("|---------------------------------------------------------------------------------------------------|\n");
@@ -26,155 +26,55 @@ void cabecalho() {
 }
 
 void inserirNovoCliente() {
-	int numeroClientes, i,val_indice,*indice = &val_indice,tamanhoBase,*pTamanho = &tamanhoBase;
-	printf("Quantos clientes deseja adicionar? ");
-	scanf("%d", &numeroClientes);
+	printf("Informe os dados do cliente: \n");
+	printf("Nome: ");
+	char nome[101];
+	scanf("%[^\n]", nome);
 	getchar();
-	Cliente* clientes = listaCliente(clientes,indice);
-	DEBUG printf("Numero de entradas ja existentes:%d\n",*indice);
-	atualizarClientes(numeroClientes,clientes,pTamanho);
-	DEBUG printf("Indice novo:%d\n",*indice);
-	int tamanho = *indice;
-	for(i = tamanho; i < numeroClientes+tamanho; i++) {
-		printf("Dados do cliente: \n");
-		char nome[101];
-		printf("Nome >>> ");
-		scanf("%[^\n]", nome);
-		getchar();
-		char endereco[201];
-		printf("Endereço >>> ");
-		scanf("%[^\n]", endereco);
-		getchar();
-		char telefone[12];
-		printf("Telefone >>> ");
-		scanf("%[^\n]", telefone);
-		getchar();
-		unsigned int codigoCliente = *indice;		
-		(*indice)++;
-		clientes[i] = novoCliente(nome, endereco, telefone, codigoCliente);
-		DEBUG {
-			printf("Dados: \n");
-			printf("nome: %s\n", nome);
-			printf("endereco: %s\n", endereco);
-			printf("telefone: %s\n", telefone);
-			printf("codigoCliente: %u\n", codigoCliente);
-		}
-		DEBUG {
-			printf("Estado cliente: \n");
-			printf("nome: %s\n", pegarNome(clientes[i]));
-			printf("endereco: %s\n", pegarEndereco(clientes[i]));
-			printf("telefone: %s\n", pegarTelefone(clientes[i]));
-			printf("codigoCliente: %u\n", pegarCodigoCliente(clientes[i]));
-		}
-	}
-	DEBUG printf("Numero de entradas a serem salvas:%d\n",*indice);
-	//GRAVANDO O OBJET
-	int gravacaoOk = salvarClientes(clientes, (*indice));
-	if(!gravacaoOk) DEBUG printf("Gravacao funcionou.\n");
-
+	printf("Endereço: ");
+	char endereco[201];
+	scanf("%[^\n]", endereco);
+	getchar();
+	printf("Telefone: ");
+	char telefone[12];
+	scanf("%[^\n]", telefone);
+	getchar();
+	adicionarCliente(&gerenciadorLista, nome, endereco, telefone);
 }
 
 void inserirNovoRecebimento() {
-	printf("Já possui cadastro? (S/N) ");
-	char resposta;
-	scanf("%c", &resposta);
+	//um operador controla isso
+	printf("Insira código do cliente: ");
+	char entrada[20];
+	scanf("%[^\n]", entrada);
 	getchar();
-	resposta = toupper(resposta);
-	if(resposta == 'S') {
-		Cliente cliente = NULL;
-		printf("Informe o código do cliente: ");
-		int codigo;
-		scanf("%d", &codigo);
-		getchar();
-		int tamanhoLista, *tamanhoPointer = &tamanhoLista, i;
-		Cliente* clientes = listaCliente(clientes, tamanhoPointer);
-		for(i = 0; i < tamanhoLista; i++) {
-			if(clientes[i]->codigoCliente == codigo) {
-				cliente = clientes[i];
-			}
-		}
-		//mas pode ocorrer dele se esquecer na hora ou digitar um numero errado ou ate msm um numero q n existe
-		if(cliente == NULL) inserirNovoRecebimento();
-		DEBUG {
-			printf("Dados cliente encontrado:\n");
-			printf("Name: %s\n", pegarNome(cliente));
-			printf("Telefone: %s\n", pegarTelefone(cliente));
-			printf("Endereco: %s\n", pegarEndereco(cliente));
-			printf("Codigo cliente: %d\n", pegarCodigoCliente(cliente));
-		}
-		int numeroDocumento = gerarNumDoc(cliente, recebimentosLista);
-		if(numeroDocumento == -1)
-			printf("Cliente já possui três recebimentos e não é possível inserir mais.\n");
-		else {
-			//fazer recebimento
-		}
-	} else {
-		//cadastra cliente e faz o recebimento
+	int codigo = stringToInt(entrada);
+	if(codigo == -1) {
 		inserirNovoCliente();
 		inserirNovoRecebimento();
+	} else {
+		printf("Informe o valor da transação em rais R$: ");
+		float valor;
+		scanf("%f", &valor);
+		getchar();
+		printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
+		Data vencimento;
+		scanf("%d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
+		getchar();
+		DEBUG printf("Codigo dado: %d\n", codigo);
+		DEBUG printf("**Valor fornecido: %.2f\n", valor);
+		DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
+		adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
 	}
 }
 
 void alterarCadastroDeCliente() {
-	printf("Insira o código do cliente: ");
-	int codigo, tamanho, *tamanhoPointer = &tamanho, i, posicaoDoCliente = 0;
-	scanf("%d", &codigo);
-	getchar();
-	Cliente cliente = NULL;
-	Cliente* clientes = listaCliente(clientes, tamanhoPointer);
-	for(i = 0; i < tamanho; i++) {
-		if(clientes[i]->codigoCliente == codigo) {
-			cliente = clientes[i];
-			break;
-		}
-		posicaoDoCliente++;
-	}
-	DEBUG printf("Posicao do cliente: %d\n", posicaoDoCliente);
-	//caso nao achou
-	if(cliente == NULL) alterarCadastroDeCliente();
-	printf("Escolha o que deseja alterar:\n");
-	printf("	(1) Nome.\n");
-	printf("	(2) Endereço.\n");
-	printf("	(3) Telefone.\n");
-	printf(">>> ");
-	char opcao;
-	scanf("%c", &opcao);
-	getchar();
-	char nome[101];
-	char endereco[201];
-	char telefone[12];
-	switch(opcao) {
-		case '1' :
-			printf("Digite o nome do cliente: ");
-			scanf("%[^\n]", nome);
-			getchar();
-			mudarNome(cliente, nome);
-			break;
-		case '2' :
-			printf("Digite o Endereço: ");
-			scanf("%[^\n]", endereco);
-			getchar();
-			mudarEndereco(cliente, endereco);
-			break;
-		case '3' :
-			printf("Digite o telefone: ");
-			scanf("%[^\n]", telefone);
-			getchar();
-			mudarTelefone(cliente, telefone);
-			break;
-		default :
-			printf("Opção inválida.\n");
-			alterarCadastroDeCliente();
-			break;
-	}
-	//salve a alteracao
-	int atualizacaoOk = atualizarCliente(clientes, tamanho, cliente);
-	if(!atualizacaoOk) DEBUG printf("Gravacao funcionou.\n");
-	else DEBUG printf("Gravacao falhou.\n");
+	printf("alterarCadastroDeCliente.\n");
 }
 
 void buscarRecebimentoPorData() {
-	printf("4\n");
+	printf("buscarRecebimentoPorData.\n");
+	imprimirListaRecebimentos(&gerenciadorLista);
 }
 
 void menuPrincipal() {
@@ -187,7 +87,7 @@ void menuPrincipal() {
 }
 
 int main() {
-	recebimentosLista = listarRecebimentos(recebimentosLista, pRecebeTamanho);
+	gerenciadorLista = novaListarecebimentos();
 	system("clear");
 	setlocale(LC_ALL, "Portuguese");
 	char desligar = 'n';
@@ -224,6 +124,21 @@ int main() {
 		getchar();
 		DEBUG printf("***desligar? %c\n", desligar);
 		system("clear");
-	}
+	} 
+	//atualizaDadados(&gerenciadorLista);
+	destroirRecebimentos(&gerenciadorLista);
+
+	/*
+	Recebimentos gerenciadorLista = novaListarecebimentos();
+	printf("tamanho %d\n", tamanhoListaRecebimentos(&gerenciadorLista));
+	adicionarCliente(&gerenciadorLista, "Aurelio", "rua do aurelio", "88333");
+
+	adicionarRecebimento(&gerenciadorLista, 0, 505);
+	adicionarRecebimento(&gerenciadorLista, 0, 1);
+	adicionarRecebimento(&gerenciadorLista, 0, 202);
+	adicionarCliente(&gerenciadorLista, "Mario", "rua do mario", "284922222");
+	imprimirListaRecebimentos(&gerenciadorLista);
+	printf("tamanho %d\n", tamanhoListaRecebimentos(&gerenciadorLista));
+	destroirRecebimentos(&gerenciadorLista); */
 	return 0;
 }
