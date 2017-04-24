@@ -53,23 +53,38 @@ void inserirNovoRecebimento() {
 		inserirNovoCliente();
 		inserirNovoRecebimento();
 	} else {
-		printf("Informe o valor da transação em rais R$: ");
-		float valor;
-		scanf("%f", &valor);
-		getchar();
-		printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
-		Data vencimento;
-		scanf("%d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
-		getchar();
-		DEBUG printf("Codigo dado: %d\n", codigo);
-		DEBUG printf("**Valor fornecido: %.2f\n", valor);
-		DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
-		adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+		if(!codigoClienteValido(&gerenciadorLista, codigo)) {
+			printf("Não encontramos o cliente pelo codigo fornecido.\n");
+			inserirNovoRecebimento();
+		} else {
+			printf("Informe o valor da transação em rais R$: ");
+			float valor;
+			scanf("%f", &valor);
+			getchar();
+			printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
+			Data vencimento;
+			scanf(" %d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
+			getchar();
+			DEBUG printf("Codigo dado: %d\n", codigo);
+			DEBUG printf("**Valor fornecido: %.2f\n", valor);
+			DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
+			adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+		}
 	}
 }
 
 void alterarCadastroDeCliente() {
-	printf("alterarCadastroDeCliente.\n");
+	printf("Insira o código do cliente: ");
+	char entrada[20];
+	scanf("%[^\n]", entrada);
+	getchar();
+	int codigo = stringToInt(entrada);
+	if(!codigoClienteValido(&gerenciadorLista, codigo)) {
+		printf("Não encontramos o cliente pelo codigo fornecido.\n");
+		inserirNovoRecebimento();
+	} else {
+
+	}
 }
 
 void buscarRecebimentoPorData() {
