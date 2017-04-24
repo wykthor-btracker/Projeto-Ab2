@@ -39,4 +39,8 @@ void imprimirListaRecebimentos(Recebimentos* lista);
 
 int codigoClienteValido(Recebimentos* lista, int codigo);
 
+void alterarDadosClientes(Recebimentos* lista, Cliente cliente);
+
+Cliente pegarUmCliente(Recebimentos* lista, int codigo);
+
 #endif

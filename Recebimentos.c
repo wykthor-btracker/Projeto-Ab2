@@ -118,3 +118,19 @@ void imprimirListaRecebimentos(Recebimentos* lista) {
 		}
 	}
 } 
+
+Cliente pegarUmCliente(Recebimentos* lista, int codigo) {
+	int i;
+	for(i = 0; i < lista->index; i++)
+		if(lista->nodes[i]->cliente->codigoCliente == codigo)
+			return lista->nodes[i]->cliente;
+	return NULL;
+}
+
+void alterarDadosClientes(Recebimentos* lista, Cliente cliente) {
+	int i;
+	for(i = 0; i < lista->index; i++) 
+		if(lista->nodes[i]->cliente->codigoCliente == cliente->codigoCliente)
+			lista->nodes[i]->cliente = cliente;
+	DEBUG printf("Dados alterados.\n");
+}
