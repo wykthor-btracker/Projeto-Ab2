@@ -29,7 +29,7 @@ Recebimentos novaListarecebimentos();
 
 int tamanhoListaRecebimentos(Recebimentos* lista);
 
-void destroirRecebimentos(Recebimentos* recebimentos);
+void destruirRecebimentos(Recebimentos* recebimentos);
 
 void adicionarCliente(Recebimentos* lista, String nome, String endereco, String telefone);
 

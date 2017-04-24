@@ -89,7 +89,7 @@ int tamanhoListaRecebimentos(Recebimentos* lista) {
 	return lista->index;
 }
 
-void destroirRecebimentos(Recebimentos* recebimentos) {
+void destruirRecebimentos(Recebimentos* recebimentos) {
 	int i, j;
 	for(i = 0; i < recebimentos->index; i++) {
 		free(recebimentos->nodes[i]->cliente);
