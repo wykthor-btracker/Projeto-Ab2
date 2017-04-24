@@ -44,6 +44,7 @@ void adicionarRecebimento(Recebimentos* lista,
 	for(i = 0; i < lista->index; i++) {
 		if(lista->nodes[i]->cliente->codigoCliente == codigoCliente) {
 			for(j = 0; j < 3; j++) {
+				DEBUG printf("Recebimentos feitos: %d\n", lista->nodes[i]->recebimentosFeitos);
 				if(lista->nodes[i]->recebimentosFeitos == 3)
 					printf("Cliente já atingiu número máximo de recebimentos.\n");
 				else {
@@ -59,6 +60,7 @@ void adicionarRecebimento(Recebimentos* lista,
 					lista->nodes[i]->rec[j]->flag = 1; // o j esta em uso
 					lista->nodes[i]->recebimentosFeitos++;
 					DEBUG printf("Recebimento adicionado.\n");
+					break;
 				}
 			}
 		}
@@ -81,9 +83,10 @@ void imprimirListaRecebimentos(Recebimentos* lista) {
 		printf("Telefone cliente: %s\n", lista->nodes[i]->cliente->telefone);
 		printf("codigo Cliente: %d\n", lista->nodes[i]->cliente->codigoCliente);
 		int recebimentosDesseCliente = lista->nodes[i]->recebimentosFeitos, j;
+		DEBUG printf("Recebimentos : %d\n", recebimentosDesseCliente);
 		for(j = 0; j < recebimentosDesseCliente; j++) {
 			Recebimento handle = lista->nodes[i]->rec[j];
-			printf("	Recebimento numero %d\n", j);
+			//printf("	Recebimento numero %d\n", j);
 			printf("	Numero do documento: %d\n",  handle->numeroDocumento);
 			printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
 			printf("	Data emissao: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
