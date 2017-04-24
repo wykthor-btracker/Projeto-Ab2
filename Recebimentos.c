@@ -8,259 +8,86 @@
 
 #define DEBUG if(1)
 
-//TODO
-Recebimento *listarRecebimentos(Recebimento *recebimentos,int *tamanhoLista)
-{
-	FILE *leitorArquivo;
-	int i = 0,tamanho = 1;
-	recebimentos = malloc(sizeof(receb)*tamanho);
-	recebimentos[i] = malloc(sizeof(receb));
-	if((leitorArquivo = fopen("recebimentos.dat","r"))==NULL) printf("Fail to read recebimentos.dat .\n");
-	while(fscanf(leitorArquivo,"%u %f %d/%d/%d %d/%d/%d %u %d",
-		&recebimentos[i]->numeroDocumento,
-		&recebimentos[i]->valorRecebimento,
-		&recebimentos[i]->dataEmissao.dia,
-		&recebimentos[i]->dataEmissao.mes,
-		&recebimentos[i]->dataEmissao.ano,
-		&recebimentos[i]->dataVencimento.dia,
-		&recebimentos[i]->dataVencimento.mes,
-		&recebimentos[i]->dataVencimento.ano,
-		&recebimentos[i]->codigoCliente,
-		&recebimentos[i]->flag)!=EOF)
-		{ 
-			i++;
-			tamanho++;
-			recebimentos = realloc(recebimentos,sizeof(receb)*tamanho);
-			recebimentos[i] = malloc(sizeof(receb));
-		}
-	*tamanhoLista = i;
-	fclose(leitorArquivo);
-	return(recebimentos);
-}
-int salvarRecebimentosArquivo(Recebimento *recebimentos,int tamanho)
-{
-	FILE *escritorArquivo;
+Node novoNode() {
+	Node node = (Node) malloc(sizeof(NODE_TAMANHO));
+	node->cliente = (Cliente) malloc(sizeof(tamanhoCliente));
 	int i;
-	escritorArquivo = fopen("recebimentos.dat","w");
-	for(i=0;i<tamanho;i++)
-	{
-		fprintf(escritorArquivo,"\n%u\n%f\n%d/%d/%d\n%d/%d/%d\n%u\n%d\n",
-			recebimentos[i]->numeroDocumento,
-			recebimentos[i]->valorRecebimento,
-			recebimentos[i]->dataEmissao.dia,
-			recebimentos[i]->dataEmissao.mes,
-			recebimentos[i]->dataEmissao.ano,
-			recebimentos[i]->dataVencimento.dia,
-			recebimentos[i]->dataVencimento.mes,
-			recebimentos[i]->dataVencimento.ano,
-			recebimentos[i]->codigoCliente,
-			recebimentos[i]->flag);
+	for(i = 0; i < 3; i++) {
+		node->rec[i] = (Recebimento) malloc(sizeof(receb));
+		node->recebimentosFeitos = 0;
 	}
-	fclose(escritorArquivo);
-	return 1;
+	return node;
 }
 
-Recebimento *atualizarRecebimentos(int extra,Recebimento *recebimentosLista,int *tamanhoLista)
-{
-	int i,tamanho = *tamanhoLista;
-	recebimentosLista = realloc(recebimentosLista,(sizeof(receb))*(tamanho+extra));
-	if(extra>0) for(i=tamanho;i<tamanho+extra;i++) recebimentosLista[i] = malloc(sizeof(receb));
-	*tamanhoLista = tamanho+extra;
-	return recebimentosLista;
+Recebimentos novaListarecebimentos() {
+	Recebimentos lista;
+	lista.nodes = (Node*) malloc(sizeof(NODE_TAMANHO) * 50);
+	int i;
+	for(i = 0; i < 50; i++)
+		lista.nodes[i] = novoNode();
+	lista.tamanho = 50;
+	lista.index = 0;
+	return lista;
+}
+ 
+void adicionarCliente(Recebimentos* lista, String nome,
+							 String endereco, String telefone) {
+	lista->nodes[lista->index]->cliente = 
+				novoCliente(nome, endereco, telefone, lista->index);
+	printf("Código do novo cliente: %d\n", lista->index);
+	lista->index++;
 }
 
-Recebimento *carregarRecebimentoPorCliente(Cliente cliente,Recebimento *recebimentos,Recebimento *recebimentosLista)
-{
-	int i,tamanho = 3;
-	recebimentos = malloc(sizeof(receb)*tamanho);
-	for(i=0;i<tamanho;i++) recebimentos[i] = malloc(sizeof(receb));	
-	for(i=0;i<tamanho;i++)
-	{
-		copiarRecebimento(carregarRecebimento((cliente->codigoCliente) + i,recebimentosLista),recebimentos[i]);
-	}
-	return(recebimentos);
-}	
-
-Recebimento *carregarRecebimentosPorData(Data inicio,Data fim,Recebimento *recebimentosLista)
-{
-		//Alocar espaco suficiente pra lista, comparar datas dadas como parametros
-		//e retornar uma lista contendo todos os recebimentos requisitados.
-
-	int i=0,aux=0,tamanho = 1,flag=0;
-	Recebimento *listaRecebimento;
-	listaRecebimento = malloc(sizeof(receb)*tamanho);
-
-	ordenarDatas(&inicio,&fim);
-
-	while(recebimentosLista[i] != NULL){
-		if(recebimentosLista[i]->dataVencimento.ano > inicio.ano && recebimentosLista[i]->dataVencimento.ano < fim.ano){
-			flag = 1;
-		}else if(recebimentosLista[i]->dataVencimento.ano == inicio.ano || recebimentosLista[i]->dataVencimento.ano == fim.ano){
-			if(inicio.ano == fim.ano){
-				if(recebimentosLista[i]->dataVencimento.mes > inicio.mes && recebimentosLista[i]->dataVencimento.mes < fim.mes){
-					flag = 1;
+void adicionarRecebimento(Recebimentos* lista, 
+					int codigoCliente, float valor) {
+	int i, j;
+	for(i = 0; i < lista->index; i++) {
+		if(lista->nodes[i]->cliente->codigoCliente == codigoCliente) {
+			for(j = 0; j < 3; j++) {
+				if(lista->nodes[i]->recebimentosFeitos == 3)
+					printf("Cliente já atingiu número máximo de recebimentos.\n");
+				else {
+					Data hoje = pegarDataAtual();
+					//data de vencimento -> 2 dias apos emissao
+					Data vecimento = hoje;
+					vecimento.dia += 2;
+					lista->nodes[i]->rec[j] = novoRecebimento(codigoCliente + j,
+															  valor,
+															  hoje,
+															  vecimento, 
+															  codigoCliente);
+					lista->nodes[i]->rec[j]->flag = 1; // o j esta em uso
+					lista->nodes[i]->recebimentosFeitos++;
+					DEBUG printf("Recebimento adicionado.\n");
 				}
-
-				if(inicio.mes == fim.mes){
-					if(recebimentosLista[i]->dataVencimento.dia >= inicio.dia && recebimentosLista[i]->dataVencimento.dia <= fim.dia){
-						flag = 1;
-					}
-				}else{
-					if(recebimentosLista[i]->dataVencimento.mes == inicio.mes){
-						if(recebimentosLista[i]->dataVencimento.dia >= inicio.dia){
-							flag = 1;
-						}
-					}
-					if(recebimentosLista[i]->dataVencimento.mes == fim.mes){
-						if(recebimentosLista[i]->dataVencimento.dia <= fim.dia){
-							flag = 1;
-						}
-					}
-				}
-			}else{
-				if(recebimentosLista[i]->dataVencimento.ano == inicio.ano){
-					if(recebimentosLista[i]->dataVencimento.mes > inicio.mes)
-						flag = 1;
-					if(recebimentosLista[i]->dataVencimento.mes == inicio.mes && recebimentosLista[i]->dataVencimento.dia >= inicio.dia)
-						flag = 1;
-				}
-
-				if(recebimentosLista[i]->dataVencimento.ano == fim.ano){
-					if(recebimentosLista[i]->dataVencimento.mes < fim.mes)
-						flag = 1;
-					if(recebimentosLista[i]->dataVencimento.mes == fim.mes && recebimentosLista[i]->dataVencimento.dia <= fim.dia)
-						flag = 1;
-				}				
-
 			}
 		}
-				
-		if(flag){
-			listaRecebimento[aux] = recebimentosLista[i];
-			aux++;
-			tamanho++;
-			listaRecebimento = realloc(listaRecebimento,sizeof(receb)*tamanho);
-			listaRecebimento[i] = malloc(sizeof(receb));
-		}
-
-		i++;
-		flag=0;
 	}
-
-	return listaRecebimento;
 }
 
-Recebimento copiarRecebimento(Recebimento antigoRecebimento,Recebimento novoRecebimento)
-{
-	antigoRecebimento->numeroDocumento = novoRecebimento->numeroDocumento;
-	antigoRecebimento->valorRecebimento = novoRecebimento->valorRecebimento;
-	antigoRecebimento->dataEmissao = novoRecebimento->dataEmissao;
-	antigoRecebimento->dataVencimento = novoRecebimento->dataVencimento;
-	antigoRecebimento->codigoCliente = novoRecebimento->codigoCliente;
-	antigoRecebimento->flag = novoRecebimento->flag;
-	return(antigoRecebimento);
+int tamanhoListaRecebimentos(Recebimentos* lista) {
+	return lista->index;
 }
 
-int salvarRecebimento(Recebimento recebimento,Cliente cliente,Recebimento *recebimentosLista)
-{
-	 int id = registroDisponivel(cliente,recebimentosLista);
-	 if(id == -1) return(0);
-	 recebimentosLista[id] = copiarRecebimento(recebimentosLista[id],recebimento);
-	 recebimentosLista[id]->flag = 1;
-	 return 1;
+void destroirRecebimentos(Recebimentos* recebimentos) {
+
 }
 
-int proximoRecebimento(Cliente cliente,Recebimento *recebimentosLista)
-{
-	//Recebimentos eh uma lista global que contem em cada elemento uma struct do tipo Recebimento.
-	//E o indice do recebimento corresponde a seu cliente e sua posicao na lista de recebimentos, ex:
-	//cliente 2, recebimento 2, id = 2+2 = 4, esse recebimento estara na posicao 4 da lista Recebimentos.	
-	int i,pos = 0;
-	for(i=0;i<3;i++)
-	{
-		if(recebimentosLista[cliente->codigoCliente+i]->flag == 1) pos++;
-	}
-	return(pos);
-}
-
-int gerarNumDoc(Cliente cliente,Recebimento *recebimentosLista)
-{
-	int pos = proximoRecebimento(cliente,recebimentosLista);
-	if(pos == 3) return -1;
-	return(cliente->codigoCliente+pos);
-}
-
-Recebimento carregarRecebimento(unsigned int NumDoc,Recebimento *recebimentosLista)
-{
-	return(recebimentosLista[NumDoc]);
-}
-
-Cliente *listaCliente(Cliente *lista,int* tamanhoListaClientes)
-{
-	FILE *leitor;
-	int i = 0,tamanho = 2;//Tamanho da lista deve ser maior que o numero de elementos por causa de um bug nao resolvido com fscanf.
-	lista = malloc(sizeof(tamanhoCliente)*tamanho);
-	lista[i] = malloc(sizeof(tamanhoCliente));
-	if((leitor = fopen("cliente.dat","r"))!=NULL)
-	{
-		while((fscanf(leitor," %[^\n] %[^\n] %[^\n] %d"/* %d"*/,
-			lista[i]->nome,
-			lista[i]->endereco,
-			lista[i]->telefone,
-			&lista[i]->codigoCliente)
-			!=EOF))
-			{
-				i++;
-				tamanho++;
-				lista = realloc(lista,sizeof(tamanhoCliente)*tamanho);
-				lista[i] = malloc(sizeof(tamanhoCliente));
-			}
-		fclose(leitor);	
-	}
-	*tamanhoListaClientes = i;
-	return(lista);	
-}
-
-int salvarClientes(Cliente *clientes,int tamanho)
-{
-	FILE *escritor;
+void imprimirListaRecebimentos(Recebimentos* lista) {
 	int i;
-	if((escritor = fopen("cliente.dat","w"))==NULL) printf("Fail to write on cliente.dat\n");
-	for(i=0;i<tamanho;i++)
-	{
-		fprintf(escritor,"%s\n%s\n%s\n%d\n",
-				clientes[i]->nome,
-				clientes[i]->endereco,
-				clientes[i]->telefone,
-				clientes[i]->codigoCliente);
-	}
-	fclose(escritor);
-	return 0;
-}
-
-Cliente *atualizarClientes(int extra,Cliente *clientesLista,int *tamanhoListaCliente)
-{
-	int i,tamanho = *tamanhoListaCliente;
-	clientesLista = realloc(clientesLista,(sizeof(tamanhoCliente))*(tamanho+extra));
-	if(extra>0) for(i=tamanho;i<(tamanho-1)+extra;i++) clientesLista[i] = malloc(sizeof(tamanhoCliente));
-	*tamanhoListaCliente = (tamanho-1)+extra;
-	return clientesLista;
-}
-
-int atualizarCliente(Cliente* listaClientes, int tamanhoLista, Cliente cliente) {
-	/*
-		So um atributo nunca muda mesmo alterando dados do cliente, o codigo.
-		Por isso esse loop busca na lista de clientes o clinete para ser mudado pelo codigo.
-		Achou, iguale e depois salve a lista;
-	*/
-	int i;
-	for(i = 0; i < tamanhoLista; i++)
-		if(listaClientes[i]->codigoCliente == cliente->codigoCliente) {
-			listaClientes[i] = cliente;
-			break;
+	for(i = 0; i < lista->index; i++) {
+		printf("Nome cliente: %s\n", lista->nodes[i]->cliente->nome);
+		printf("Endereco cliente: %s\n", lista->nodes[i]->cliente->endereco);
+		printf("Telefone cliente: %s\n", lista->nodes[i]->cliente->telefone);
+		printf("codigo Cliente: %d\n", lista->nodes[i]->cliente->codigoCliente);
+		int recebimentosDesseCliente = lista->nodes[i]->recebimentosFeitos, j;
+		for(j = 0; j < recebimentosDesseCliente; j++) {
+			Recebimento handle = lista->nodes[i]->rec[j];
+			printf("	Recebimento numero %d\n", j);
+			printf("	Numero do documento: %d\n",  handle->numeroDocumento);
+			printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
+			printf("	Data emissao: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
+			printf("	Data emissao: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 		}
-
-	int gravacaoOk = salvarClientes(listaClientes, tamanhoLista);
-	if(!gravacaoOk) DEBUG printf("Gravacao ok.\n");
-	else DEBUG printf("Gravacao falhou.\n");
-}
+	}
+} 
