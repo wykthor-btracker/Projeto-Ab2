@@ -79,7 +79,13 @@ int tamanhoListaRecebimentos(Recebimentos* lista) {
 }
 
 void destroirRecebimentos(Recebimentos* recebimentos) {
-
+	int i, j;
+	for(i = 0; i < recebimentos->index; i++) {
+		free(recebimentos->nodes[i]->cliente);
+		for(j = 0; j < 3; j++)
+			free(recebimentos->nodes[i]->rec[j]);
+		free(recebimentos->nodes[i]);
+	}
 }
 
 void imprimirListaRecebimentos(Recebimentos* lista) {
