@@ -3,6 +3,7 @@
 #include "RecebimentoExcecoes.h"
 #include "Cliente.h"
 #include "dependencias/data.h"
+#include "dependencias/stringHandling.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,10 +37,11 @@ void adicionarCliente(Recebimentos* lista, String nome,
 				novoCliente(nome, endereco, telefone, lista->index);
 	printf("Código do novo cliente: %d\n", lista->index);
 	lista->index++;
+	DEBUG printf("Cliente inserido\n");
 }
 
 void adicionarRecebimento(Recebimentos* lista, 
-					int codigoCliente, float valor) {
+					int codigoCliente, float valor, Data v) {
 	int i, j;
 	DEBUG printf("**Inside add rece.\n");
 	DEBUG printf("**essa lista vai ate: %d\n", lista->index);
@@ -53,14 +55,14 @@ void adicionarRecebimento(Recebimentos* lista,
 					for(j = lista->nodes[i]->recebimentosFeitos; j < 3; j++) {
 						Data hoje = pegarDataAtual();
 						//data de vencimento -> 2 dias apos emissao
-						Data vecimento = hoje;
-						vecimento.dia += 2;
+						//Data vecimento = hoje;
+						//vecimento.dia += 2;
 						DEBUG printf("**Numero do documento : %d\n", codigoCliente + j);
-						DEBUG printf("**valor %.f\n", valor);
+						DEBUG printf("**valor R$ %.f\n", valor);
 						lista->nodes[i]->rec[j] = novoRecebimento(codigoCliente + j,
 																  valor,
 																  hoje,
-																  vecimento, 
+																  v, 
 																  codigoCliente);
 						lista->nodes[i]->rec[j]->flag = 1; // o j esta em uso
 						lista->nodes[i]->recebimentosFeitos++;
@@ -72,6 +74,15 @@ void adicionarRecebimento(Recebimentos* lista,
 			DEBUG printf("nao achou cliente pelo codigo.\n");
 		}
 	}
+	//printf("Não encontramos o cliente pelo codigo fornecido.\n");
+}
+
+int codigoClienteValido(Recebimentos* lista, int codigo) {
+	int i;
+	for(i = 0; i < lista->index; i++) 
+		if(lista->nodes[i]->cliente->codigoCliente == codigo)
+			return 1;
+	return 0;
 }
 
 int tamanhoListaRecebimentos(Recebimentos* lista) {

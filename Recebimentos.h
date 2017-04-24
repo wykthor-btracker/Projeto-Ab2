@@ -33,8 +33,10 @@ void destroirRecebimentos(Recebimentos* recebimentos);
 
 void adicionarCliente(Recebimentos* lista, String nome, String endereco, String telefone);
 
-void adicionarRecebimento(Recebimentos* lista, int codigoCliente, float valor);
+void adicionarRecebimento(Recebimentos* lista, int codigoCliente, float valor, Data v);
 
 void imprimirListaRecebimentos(Recebimentos* lista);	
+
+int codigoClienteValido(Recebimentos* lista, int codigo);
 
 #endif
