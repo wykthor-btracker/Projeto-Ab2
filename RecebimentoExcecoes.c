@@ -12,6 +12,5 @@ int validarDataRecebimento(Data dataEmissao,Data dataVencimento){
 			if((dataEmissao.dia < dataVencimento.dia && dataEmissao.mes == dataVencimento.mes) || dataEmissao.mes < dataVencimento.mes)
 				return 1;
 	}
-	
 	return 0;
 }
