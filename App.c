@@ -13,7 +13,7 @@
 
 #define DEBUG if(1)
 
-int clients = 0; //sempre q preciso atualize
+//int clients = 0; //sempre q preciso atualize
 
 Recebimentos gerenciadorLista; //lista global de recebimentos
 
@@ -80,10 +80,54 @@ void alterarCadastroDeCliente() {
 	getchar();
 	int codigo = stringToInt(entrada);
 	if(!codigoClienteValido(&gerenciadorLista, codigo)) {
-		printf("Não encontramos o cliente pelo codigo fornecido.\n");
-		inserirNovoRecebimento();
+		printf("Não encontramos o cliente pelo código fornecido.\n");
+		alterarCadastroDeCliente();
 	} else {
-
+		Cliente cliente = NULL;
+		cliente = pegarUmCliente(&gerenciadorLista, codigo);
+		DEBUG printf("Nome de cliente pego: %s\n", cliente->nome);
+		DEBUG printf("ENdereco do cleinte pego: %s\n", cliente->endereco);
+		DEBUG printf("Telefone do cliente pego: %s\n", cliente->telefone);
+		DEBUG printf("Codigo cliente pego: %d\n", cliente->codigoCliente);
+		printf("Escolha a opção do que deseja alterar: \n");
+		char nome[101];
+		char endereco[201];
+		char telefone[12];
+		printf("	(1) Nome.\n");
+		printf("	(2) Endereço.\n");
+		printf("	(3) Telefone.\n");
+		printf(">>> ");
+		char opcao;
+		scanf("%c", &opcao);
+		getchar();
+		switch(opcao) {
+			case '1' :
+				printf("Informe o novo nome: ");
+				scanf("%[^\n]", nome);
+				getchar();
+				copyString(cliente->nome, nome);
+				break;
+			case '2' :
+				printf("Informe o novo endereço: ");
+				scanf("%[^\n]", endereco);
+				getchar();
+				copyString(cliente->endereco, endereco);
+				break;
+			case '3' :
+				printf("Informe o novo telefone: ");
+				scanf("%[^\n]", telefone);
+				getchar();
+				copyString(cliente->telefone, telefone);
+				break;
+			default :
+				printf("Opção inválida.\n");
+				alterarCadastroDeCliente();
+				break;
+		}
+		//isso garante o tratamento
+		Cliente c = novoCliente(cliente->nome, cliente->endereco,
+				 cliente->telefone, codigo);
+		alterarDadosClientes(&gerenciadorLista, c);
 	}
 }
 
@@ -92,13 +136,18 @@ void buscarRecebimentoPorData() {
 	imprimirListaRecebimentos(&gerenciadorLista);
 }
 
+void buscarDadosCliente() {
+	printf("Buscar dados cleintes.\n");
+}
+
 void menuPrincipal() {
 	printf("Digite uma das opções: \n");
 	printf("	(1) Inserir novo cliente.\n"); //ok
 	printf("	(2) Inserir novo recebimento.\n");
 	printf("	(3) Alterar cadastro do cliente.\n"); //ok
 	printf("	(4) Buscar recebimentos por data.\n");
-	printf("	(5) Encerrar programa.\n");
+	printf("	(5) Buscar dados de um cliente.\n");
+	printf("	(6) Encerrar programa.\n");
 }
 
 int main() {
@@ -128,6 +177,9 @@ int main() {
 				buscarRecebimentoPorData();
 				break;
 			case '5' :
+				buscarDadosCliente();
+				break;
+			case '6' :
 				exit(1);
 				break;
 			default :
