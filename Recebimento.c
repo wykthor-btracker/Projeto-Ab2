@@ -35,6 +35,8 @@ Recebimento novoRecebimento(unsigned int numeroDocumento,
 	recebimento->dataEmissao = dataEmissao;
 	recebimento->dataVencimento = dataVencimento;
 	recebimento->codigoCliente = codigoCliente;
+	
+	recebimento->flag = 0;
 
 	return recebimento;
 }
