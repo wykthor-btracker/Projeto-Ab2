@@ -1,6 +1,10 @@
 #ifndef TRATAMENTOARQUIVOS_H
 #define TRATAMENTOARQUIVOS_H
 
-//TODO
+#include "Recebimentos.h"
+
+void gravarRecebimentos(Recebimentos* lista);
+
+Recebimentos* bufferizarRecebimentos(void);
 
 #endif
