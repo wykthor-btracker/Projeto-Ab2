@@ -8,7 +8,7 @@
 struct node {
 	Cliente cliente;
 	Recebimento rec[3];
-	int recebimentosFeitos; //0: disponivel, 1, em uso
+	int recebimentosFeitos; 
 };
 
 typedef struct node* Node;
@@ -42,5 +42,12 @@ int codigoClienteValido(Recebimentos* lista, int codigo);
 void alterarDadosClientes(Recebimentos* lista, Cliente cliente);
 
 Cliente pegarUmCliente(Recebimentos* lista, int codigo);
+
+void imprimirDadosCliente(Recebimentos* lista, int codigo);
+
+//retorna 1 se ainda pode, 0 senao
+int recebimentosDisponiveis(Recebimentos* lista, int codigo);
+
+Recebimentos novaListaRealocada();
 
 #endif
