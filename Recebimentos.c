@@ -41,8 +41,11 @@ void adicionarCliente(Recebimentos* lista, String nome,
 void adicionarRecebimento(Recebimentos* lista, 
 					int codigoCliente, float valor) {
 	int i, j;
+	DEBUG printf("**Inside add rece.\n");
+	DEBUG printf("**essa lista vai ate: %d\n", lista->index);
 	for(i = 0; i < lista->index; i++) {
 		if(lista->nodes[i]->cliente->codigoCliente == codigoCliente) {
+			DEBUG printf("Achou o cliente pelo codigo.\n");
 			for(j = 0; j < 3; j++) {
 				DEBUG printf("Recebimentos feitos: %d\n", lista->nodes[i]->recebimentosFeitos);
 				if(lista->nodes[i]->recebimentosFeitos == 3)
@@ -63,6 +66,8 @@ void adicionarRecebimento(Recebimentos* lista,
 					break;
 				}
 			}
+		} else {
+			DEBUG printf("nao achou cliente pelo codigo.\n");
 		}
 	}
 }
