@@ -7,6 +7,8 @@
 #ifndef	DEBUG
 #define DEBUG if(0)
 #endif
+
+/*
 int registroDisponivel(Cliente cliente,Recebimento *recebimentosLista)
 {
 	if(gerarNumDoc(cliente,recebimentosLista)==-1)
@@ -22,3 +24,5 @@ int numeroDocumentoValido(unsigned int numDoc,int *tamanhoLista,Recebimento *lis
 	else return 0;
 }
 //Desenvolver uma forma de encontrar o tamanho da lista de recebimentos e checar existencia de um dado numDoc nela.	
+
+*/
