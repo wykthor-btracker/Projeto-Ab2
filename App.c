@@ -57,18 +57,24 @@ void inserirNovoRecebimento() {
 			printf("Não encontramos o cliente pelo codigo fornecido.\n");
 			inserirNovoRecebimento();
 		} else {
-			printf("Informe o valor da transação em rais R$: ");
-			float valor;
-			scanf("%f", &valor);
-			getchar();
-			printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
-			Data vencimento;
-			scanf(" %d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
-			getchar();
-			DEBUG printf("Codigo dado: %d\n", codigo);
-			DEBUG printf("**Valor fornecido: %.2f\n", valor);
-			DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
-			adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+			int flag = recebimentosDisponiveis(&gerenciadorLista, codigo);
+			DEBUG printf("flag:%d\n", flag);
+			if(flag == 1)
+				printf("O cliente já atingiu o limite de recebimentos.\n");
+			else {
+				printf("Informe o valor da transação em reis R$: ");
+				float valor;
+				scanf("%f", &valor);
+				getchar();
+				printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
+				Data vencimento;
+				scanf(" %d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
+				getchar();
+				DEBUG printf("Codigo dado: %d\n", codigo);
+				DEBUG printf("**Valor fornecido: %.2f\n", valor);
+				DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
+				adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+			}
 		}
 	}
 }
@@ -132,12 +138,45 @@ void alterarCadastroDeCliente() {
 }
 
 void buscarRecebimentoPorData() {
-	printf("buscarRecebimentoPorData.\n");
+	//nao faz sentido cliente que nao tem cadastro ainda
+	//vir solicitar recebimentos
+	printf("Informe o código do cliente: ");
+	char entrada[20];
+	scanf("%[^\n]", entrada);
+	getchar();
+	int codigo = stringToInt(entrada);
+	if(!codigoClienteValido(&gerenciadorLista, codigo)) {
+		printf("Código fornecido não corresponde a nenhum cliente.\n");
+	} else {
+		Data de, ate;
+		printf("Informe o intervalo de datas que deseja buscar (dd/mm/ano):\n");
+		printf("de: ");
+		scanf("%d/%d/%d", &de.dia, &de.mes, &de.ano);
+		getchar();
+		printf("ate: "); 
+		scanf("%d/%d/%d", &ate.dia, &ate.mes, &ate.ano);
+		getchar();
+		DEBUG printf("DE: %d/%d/%d\n", de.dia, de.mes, de.ano);
+		DEBUG printf("Ate: %d/%d/%d\n", ate.dia, ate.mes, ate.ano);
+		//CONTINUA AQUI
+	}
+
+}
+
+void _imprimirListaRecebimentos() {
 	imprimirListaRecebimentos(&gerenciadorLista);
 }
 
 void buscarDadosCliente() {
-	printf("Buscar dados cleintes.\n");
+	printf("Informe o código do cliente: ");
+	char entrada[20];
+	scanf("%[^\n]", entrada);
+	getchar();
+	int codigo = stringToInt(entrada);
+	if(!codigoClienteValido(&gerenciadorLista, codigo))
+		printf("Cliente não encontrado.\n");
+	else
+		imprimirDadosCliente(&gerenciadorLista, codigo);
 }
 
 void menuPrincipal() {
@@ -147,10 +186,23 @@ void menuPrincipal() {
 	printf("	(3) Alterar cadastro do cliente.\n"); //ok
 	printf("	(4) Buscar recebimentos por data.\n");
 	printf("	(5) Buscar dados de um cliente.\n");
-	printf("	(6) Encerrar programa.\n");
+	printf("	(6) Imprimir todos os dados.\n"); //PARA TESTE
+	printf("	(7) Encerrar programa.\n");
 }
 
 int main() {
+	/*
+	atualizar-->gravar por cima ("w")
+	salvar -- >adicionar ao que ja tem ("a")
+
+	int atualizar; //1 : atualizar, 0 salvar
+	se arquivo tiver vazio
+		geranciadorLista = novaListarecebimentos();
+		salvar = 0
+	else
+		gerenciadorLista = bufferizarArquivo();
+		salvar = 1
+	*/
 	gerenciadorLista = novaListarecebimentos();
 	system("clear");
 	setlocale(LC_ALL, "Portuguese");
@@ -179,7 +231,10 @@ int main() {
 			case '5' :
 				buscarDadosCliente();
 				break;
-			case '6' :
+			case '6':
+				_imprimirListaRecebimentos();
+				break;
+			case '7' :
 				exit(1);
 				break;
 			default :
@@ -192,8 +247,15 @@ int main() {
 		DEBUG printf("***desligar? %c\n", desligar);
 		system("clear");
 	} 
+	/*
+	se atualizar == 1
+		gravarRecebimentos
+	senao	
+
+	
+	*/
 	//atualizaDadados(&gerenciadorLista);
-	destroirRecebimentos(&gerenciadorLista);
+	destruirRecebimentos(&gerenciadorLista);
 
 	/*
 	Recebimentos gerenciadorLista = novaListarecebimentos();
