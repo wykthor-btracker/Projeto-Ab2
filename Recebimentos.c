@@ -45,27 +45,29 @@ void adicionarRecebimento(Recebimentos* lista,
 	DEBUG printf("**essa lista vai ate: %d\n", lista->index);
 	for(i = 0; i < lista->index; i++) {
 		if(lista->nodes[i]->cliente->codigoCliente == codigoCliente) {
-			DEBUG printf("Achou o cliente pelo codigo.\n");
-			for(j = 0; j < 3; j++) {
-				DEBUG printf("Recebimentos feitos: %d\n", lista->nodes[i]->recebimentosFeitos);
+			DEBUG printf("**Achou o cliente pelo codigo.\n");
+			DEBUG printf("**Recebimentos ja feitos por esse cliente: %d\n", lista->nodes[i]->recebimentosFeitos);
 				if(lista->nodes[i]->recebimentosFeitos == 3)
 					printf("Cliente já atingiu número máximo de recebimentos.\n");
 				else {
-					Data hoje = pegarDataAtual();
-					//data de vencimento -> 2 dias apos emissao
-					Data vecimento = hoje;
-					vecimento.dia += 2;
-					lista->nodes[i]->rec[j] = novoRecebimento(codigoCliente + j,
-															  valor,
-															  hoje,
-															  vecimento, 
-															  codigoCliente);
-					lista->nodes[i]->rec[j]->flag = 1; // o j esta em uso
-					lista->nodes[i]->recebimentosFeitos++;
-					DEBUG printf("Recebimento adicionado.\n");
-					break;
+					for(j = lista->nodes[i]->recebimentosFeitos; j < 3; j++) {
+						Data hoje = pegarDataAtual();
+						//data de vencimento -> 2 dias apos emissao
+						Data vecimento = hoje;
+						vecimento.dia += 2;
+						DEBUG printf("**Numero do documento : %d\n", codigoCliente + j);
+						DEBUG printf("**valor %.f\n", valor);
+						lista->nodes[i]->rec[j] = novoRecebimento(codigoCliente + j,
+																  valor,
+																  hoje,
+																  vecimento, 
+																  codigoCliente);
+						lista->nodes[i]->rec[j]->flag = 1; // o j esta em uso
+						lista->nodes[i]->recebimentosFeitos++;
+						DEBUG printf("Recebimento adicionado.\n");
+						break;
+					}
 				}
-			}
 		} else {
 			DEBUG printf("nao achou cliente pelo codigo.\n");
 		}
