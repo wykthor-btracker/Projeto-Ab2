@@ -27,7 +27,7 @@ Recebimento novoRecebimento(unsigned int numeroDocumento,
 		scanf(" %d/%d/%d",&recebimento->dataVencimento.dia,&recebimento->dataVencimento.mes,&recebimento->dataVencimento.ano);
 	}
 	
-	while(!validaData(dataVencimento) && !validarDataRecebimento(dataEmissao,dataVencimento) ){
+	while(!validaData(dataVencimento) && !verificarDataVencimento(dataVencimento)){
 		printf("A data de vencimento é menor do que a data de emissão, informe uma nova data de vencimento no formato dd/mm/yyyy:\n");
 		scanf(" %d/%d/%d",&recebimento->dataVencimento.dia,&recebimento->dataVencimento.mes,&recebimento->dataVencimento.ano);
 	}
@@ -35,8 +35,6 @@ Recebimento novoRecebimento(unsigned int numeroDocumento,
 	recebimento->dataEmissao = dataEmissao;
 	recebimento->dataVencimento = dataVencimento;
 	recebimento->codigoCliente = codigoCliente;
-	
-	recebimento->flag = 0;
 
 	return recebimento;
 }
@@ -76,4 +74,3 @@ void mudarValorRecebimento(Recebimento recebimento, float valorRecebimento){
 void destruirRecebimento(Recebimento recebimento){
 	free(recebimento);
 }
-

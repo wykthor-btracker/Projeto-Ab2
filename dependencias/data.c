@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define DEBUG if(1)
+
 // 1 -- TRUE 0 -- FALSE
 int validaData(Data data){
 	if(data.dia <= 31 && data.mes <= 12){
@@ -62,6 +64,27 @@ Data pegarDataAtual(){
   	data.ano = pointer->tm_year+1900;
 
   	return data;
+}
+
+int verificarDataVencimento(Data dataVencimento){
+	Data dataEmissao = pegarDataAtual();
+
+	DEBUG printf("****Data vencimento dada: %d/%d/%d\n", 
+			dataVencimento.dia, dataVencimento.mes, dataVencimento.ano);
+
+	if(dataVencimento.ano < dataEmissao.ano){
+		return 0;
+	}else if(dataVencimento.ano == dataEmissao.ano){
+		if(dataVencimento.mes < dataEmissao.mes){
+			return 0;
+		}else if(dataVencimento.mes == dataEmissao.mes){
+			if(dataVencimento.dia < dataEmissao.dia){
+				return 0;
+			}
+		}
+	}
+
+	return 1;
 }
 
 int calcDiferencaDatas(Data data){
