@@ -64,6 +64,24 @@ Data pegarDataAtual(){
   	return data;
 }
 
+int verificarDataVencimento(Data dataVencimento){
+	Data dataEmissao = pegarDataAtual();
+
+	if(dataVencimento.ano < dataEmissao.ano){
+		return 0;
+	}else if(dataVencimento.ano == dataEmissao.ano){
+		if(dataVencimento.mes < dataEmissao.mes){
+			return 0;
+		}else if(dataVencimento.mes == dataEmissao.mes){
+			if(dataVencimento.dia < dataEmissao.dia){
+				return 0;
+			}
+		}
+	}
+
+	return 1;
+}
+
 int calcDiferencaDatas(Data data){
 	time_t diaAtual;
 	struct tm dataDesejada;
