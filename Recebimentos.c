@@ -183,10 +183,21 @@ int possuiRecebimentos(Recebimentos* lista, int codigo) {
 
 void recebimentosPorData(Recebimentos* lista,
 			 int codigo, Data de, Data ate) {
-	int i;
+	int i, j;
 	for(i = 0; i < lista->index; i++) {
 		if(lista->nodes[i]->cliente->codigoCliente == codigo) {
 			printf("tem receb\n");
+			Cliente cli = lista->nodes[i]->cliente;
+			printf("Cliente: %s\n", pegarNome(cli));
+			int recebimentosDesseCliente = lista->nodes[i]->recebimentosFeitos;
+			for(j = 0; j < recebimentosDesseCliente; j++) {
+				Recebimento r = lista->nodes[i]->rec[j];
+				printf("Recebimento %d:\n", j);
+				printf("	Valor: R$ %.2f\n", r->valorRecebimento);
+				printf("	Vencimento: %d/%d/%d\n", r->valorRecebimento, r->dataVencimento.dia,
+					 r->dataVencimento.mes, r->dataVencimento.ano);
+				printf("	Dias até vencimento: %d\n", calcDiferencaDatas(r->dataVencimento));
+			}
 		}
 	}
 }
