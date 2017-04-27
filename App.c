@@ -155,9 +155,9 @@ void buscarRecebimentoPorData() {
 	if(!codigoClienteValido(&gerenciadorLista, codigo)) {
 		printf("Código fornecido não corresponde a nenhum cliente.\n");
 	} else {
-		int temRece = possuiRecebimentos(&gerenciadorLista, codigo);
-		DEBUG printf("*******tem recebimento: %d\n", temRece);
-		if(temRece == 1) {
+		int semRecebimentos = possuiRecebimentos(&gerenciadorLista, codigo);
+		DEBUG printf("*******tem recebimento: %d\n", semRecebimentos);
+		if(semRecebimentos) {
 			printf("Esse cliente não possui recebimentos cadastrados.\n");
 		} else {
 			Data de, ate;
