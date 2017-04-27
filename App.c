@@ -70,10 +70,17 @@ void inserirNovoRecebimento() {
 				Data vencimento;
 				scanf(" %d/%d/%d", &vencimento.dia, &vencimento.mes, &vencimento.ano);
 				getchar();
-				DEBUG printf("Codigo dado: %d\n", codigo);
-				DEBUG printf("**Valor fornecido: %.2f\n", valor);
-				DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
-				adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+				int dataOk = verificarDataVencimento(vencimento);
+				if(!dataOk) {
+					printf("Data fornecida e inválida.\n");
+					inserirNovoRecebimento();
+				} else {
+					DEBUG printf("***dataOK : %d\n", dataOk);
+					DEBUG printf("Codigo dado: %d\n", codigo);
+					DEBUG printf("**Valor fornecido: %.2f\n", valor);
+					DEBUG printf("**Data entrada: %d/%d/%d\n", vencimento.dia, vencimento.mes, vencimento.ano);
+					adicionarRecebimento(&gerenciadorLista, codigo, valor, vencimento);
+				}
 			}
 		}
 	}
@@ -148,17 +155,23 @@ void buscarRecebimentoPorData() {
 	if(!codigoClienteValido(&gerenciadorLista, codigo)) {
 		printf("Código fornecido não corresponde a nenhum cliente.\n");
 	} else {
-		Data de, ate;
-		printf("Informe o intervalo de datas que deseja buscar (dd/mm/ano):\n");
-		printf("de: ");
-		scanf("%d/%d/%d", &de.dia, &de.mes, &de.ano);
-		getchar();
-		printf("ate: "); 
-		scanf("%d/%d/%d", &ate.dia, &ate.mes, &ate.ano);
-		getchar();
-		DEBUG printf("DE: %d/%d/%d\n", de.dia, de.mes, de.ano);
-		DEBUG printf("Ate: %d/%d/%d\n", ate.dia, ate.mes, ate.ano);
-		//CONTINUA AQUI
+		int temRece = possuiRecebimentos(&gerenciadorLista, codigo);
+		DEBUG printf("*******tem recebimento: %d\n", temRece);
+		if(temRece == 1) {
+			printf("Esse cliente não possui recebimentos cadastrados.\n");
+		} else {
+			Data de, ate;
+			printf("Informe o intervalo de datas que deseja buscar (dd/mm/ano):\n");
+			printf("de: ");
+			scanf("%d/%d/%d", &de.dia, &de.mes, &de.ano);
+			getchar();
+			printf("ate: "); 
+			scanf("%d/%d/%d", &ate.dia, &ate.mes, &ate.ano);
+			getchar();
+			DEBUG printf("DE: %d/%d/%d\n", de.dia, de.mes, de.ano);
+			DEBUG printf("Ate: %d/%d/%d\n", ate.dia, ate.mes, ate.ano);
+			recebimentosPorData(&gerenciadorLista, codigo, de, ate);
+		}
 	}
 
 }
