@@ -50,4 +50,9 @@ int recebimentosDisponiveis(Recebimentos* lista, int codigo);
 
 Recebimentos novaListaRealocada();
 
+//1 se nao possuir, 0 se possuir
+int possuiRecebimentos(Recebimentos* lista, int codigo);
+
+void recebimentosPorData(Recebimentos* list, int codigo, Data de, Data ate);
+
 #endif

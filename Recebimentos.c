@@ -174,3 +174,19 @@ int recebimentosDisponiveis(Recebimentos* lista, int codigo) {
 	}
 	return 0;
 }
+
+int possuiRecebimentos(Recebimentos* lista, int codigo) {
+	int i;
+	for(i = 0; i < lista->index; i++)
+		return lista->nodes[i]->recebimentosFeitos == 0;
+}
+
+void recebimentosPorData(Recebimentos* lista,
+			 int codigo, Data de, Data ate) {
+	int i;
+	for(i = 0; i < lista->index; i++) {
+		if(lista->nodes[i]->cliente->codigoCliente == codigo) {
+			printf("tem receb\n");
+		}
+	}
+}
