@@ -113,8 +113,8 @@ void imprimirListaRecebimentos(Recebimentos* lista) {
 			//printf("	Recebimento numero %d\n", j);
 			printf("	Numero do documento: %d\n",  handle->numeroDocumento);
 			printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
-			printf("	Data emissao: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
-			printf("	Data emissao: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
+			printf("	Data de emissão: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
+			printf("	Data de vecimento: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 		}
 	}
 } 
@@ -151,8 +151,8 @@ void imprimirDadosCliente(Recebimentos* lista, int codigo) {
 				//printf("	Recebimento numero %d\n", j);
 				printf("	Numero do documento: %d\n",  handle->numeroDocumento);
 				printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
-				printf("	Data emissao: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
-				printf("	Data emissao: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
+				printf("	Data de emissão: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
+				printf("	Data de vecimento: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 			}
 			printf("-----------------------------------------------------\n");
 		}
@@ -161,21 +161,16 @@ void imprimirDadosCliente(Recebimentos* lista, int codigo) {
 }
 
 int recebimentosDisponiveis(Recebimentos* lista, int codigo) {
-	int i;
+	int i, toReturn;
 	DEBUG printf("Dentro de recebimentosValidos.\n");
-	for(i = 0; i < lista->index; i++) {
-		if(lista->nodes[i]->cliente == codigo) {
-			DEBUG printf("Codigo encontrado: %d\n", codigo);
-			if(lista->nodes[i]->recebimentosFeitos < 3) {
-				DEBUG printf("recebimentos feitos: %d\n", lista->nodes[i]->recebimentosFeitos);
-				return 1;
-			}
+	for(i = 0; i < lista->index; i++) 
+		if(lista->nodes[i]->cliente->codigoCliente == codigo) {
+			toReturn = lista->nodes[i]->recebimentosFeitos < 3;
 		}
-	}
-	return 0;
+	return toReturn;
 }
 
-int possuiRecebimentos(Recebimentos* lista, int codigo) {
+int possuiRecebimentos(Recebimentos* lista, int codigo) { 
 	int i;
 	for(i = 0; i < lista->index; i++)
 		return lista->nodes[i]->recebimentosFeitos == 0;
@@ -196,7 +191,7 @@ void recebimentosPorData(Recebimentos* lista,
 				printf("	Valor: R$ %.2f\n", r->valorRecebimento);
 				printf("	Vencimento: %d/%d/%d\n", r->valorRecebimento, r->dataVencimento.dia,
 					 r->dataVencimento.mes, r->dataVencimento.ano);
-				printf("	Dias até vencimento: %d\n", calcDiferencaDatas(r->dataVencimento));
+				printf("	Dias de atraso: %d\n", calcDiferencaDatas(r->dataVencimento));
 			}
 		}
 	}
