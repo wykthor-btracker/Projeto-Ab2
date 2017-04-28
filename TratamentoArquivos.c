@@ -4,6 +4,9 @@
 #include "Cliente.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define DEBUG if(1)
 
 const char CAMNHO[] = "recebimentos.dat";
 
@@ -33,7 +36,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 	for(i = 0; i < lista->index; i++) {
 		Cliente cli = lista->nodes[i]->cliente;
 		//gravando os dados do cliente
-		fprintf(escritor, "%s$?%d$?%s$?%s$?", 
+		fprintf(escritor, "%s$?%d$?%s$?%s", 
 			cli->nome, cli->codigoCliente, cli->endereco, cli->telefone);
 		//gravando dados dos recebimentos do cliente
 		int recebFeitos = lista->nodes[i]->recebimentosFeitos;
@@ -42,25 +45,73 @@ void gravarRecebimentos(Recebimentos* lista) {
 		else {
 			for(j = 0; j < recebFeitos; j++) {
 				Recebimento r = lista->nodes[i]->rec[j];
-				fprintf(escritor, "%d$?%.2f$?%d$?%d$?%d$?%d$?%d$?%d$?%d$?%d\n",
+				fprintf(escritor, "#?%d$?%.2f$?%d$?%d$?%d$?%d$?%d$?%d$?%d$?%d",
 					r->numeroDocumento, r->valorRecebimento,
 					r->dataEmissao.dia, r->dataEmissao.mes,
 					r->dataEmissao.ano, r->dataVencimento.dia, 
 					r->dataVencimento.mes, r->dataVencimento.ano, 
 					r->codigoCliente, r->flag);
 			}
+			printf("\n");
 		}
 	}
 	fclose(escritor);
 }
 
-Recebimentos* bufferizarRecebimentos() {
-	Recebimentos* buffer = NULL;
+Recebimentos bufferizarRecebimentos() {
+	Recebimentos buffer;
+	int i, j;
 	const char KEY[] = "$?";
 	FILE* leitor = fopen(CAMNHO, "r");
 	int tamanhoLista, indexLista;
-	fscanf(leitor, "%d %d", &tamanhoLista, &indexLista);
-	//verifica se precisa getchar();
+	fscanf(leitor, "%d %d\n", &tamanhoLista, &indexLista);
+	DEBUG printf("%d %d\n", tamanhoLista, indexLista);
+	buffer.nodes = (Node*) malloc(sizeof(NODE_TAMANHO) * tamanhoLista);
+	for(i = 0; i < tamanhoLista; i++)
+		buffer.nodes[i] = novoNode();
+	buffer.tamanho = tamanhoLista;
+	buffer.index = indexLista;
+
+	char linhaArquivo[10000];	
+
+	for(i = 0; i < indexLista; i++) {
+		Cliente c = buffer.nodes[i]->cliente;
+		fgets(linhaArquivo, sizeof(linhaArquivo), leitor);
+		DEBUG printf("==Linha pega %s\n", linhaArquivo);
+		char* substring = strtok(linhaArquivo, KEY);
+		copyString(c->nome, substring); 				  //get name
+		DEBUG printf("==Nome: %s\n", substring);
+		c->codigoCliente = stringToInt(strtok(NULL, KEY));//get codigo
+		DEBUG printf("==Codigo cliente: %d\n", c->codigoCliente);
+		copyString(c->endereco, strtok(NULL, KEY));//get endereco
+		DEBUG printf("==endereco: %s\n", c->endereco);
+		copyString(c->telefone, strtok(NULL, KEY));//get telefone 
+		DEBUG printf("==endereco: %s\n", c->telefone);
+		/*
+		if(isEqual(strtok(NULL, KEY), "\n"))
+			continue;
+		else {
+			int recFeitos = 0;
+			for(j = 0; j < 3; j++) {
+				recFeitos++;
+				buffer.nodes[i]->rec[j] = (Recebimento) malloc(sizeof(receb));
+				Recebimento r = buffer.nodes[i]->rec[j];
+				r->numeroDocumento = stringToInt(strtok(NULL, KEY));
+				r->valorRecebimento = atof(strtok(NULL, KEY));
+				r->dataEmissao.dia = stringToInt(strtok(NULL, KEY));
+				r->dataEmissao.mes = stringToInt(strtok(NULL, KEY));
+				r->dataEmissao.ano = stringToInt(strtok(NULL, KEY));
+				r->dataVencimento.dia = stringToInt(strtok(NULL, KEY));
+				r->dataVencimento.mes = stringToInt(strtok(NULL, KEY));
+				r->dataVencimento.ano = stringToInt(strtok(NULL, KEY));
+				r->codigoCliente = stringToInt(strtok(NULL, KEY));
+				r->flag = stringToInt(strtok(NULL, KEY));
+				if(isEqual(strtok(NULL, KEY), "\n"))
+					break;
+			}
+			buffer.nodes[i]->recebimentosFeitos = recFeitos;
+		} */
+	}	
 	fclose(leitor);
 	return buffer;
 }

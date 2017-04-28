@@ -8,6 +8,6 @@ int arquivoVazio(void);
 
 void gravarRecebimentos(Recebimentos* lista);
 
-Recebimentos* bufferizarRecebimentos(void);
+Recebimentos bufferizarRecebimentos(void);
 
 #endif
