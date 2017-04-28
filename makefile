@@ -13,7 +13,7 @@ CFLAGS = -Wall -g -std=c99
 #   option, something like (this will link in libmylib.so and libm.so:
 LIBS = -lm
 # define the C source files
-SRCS = Cliente.c Recebimento.c Recebimentos.c ClienteExcecoes.c RecebimentoExcecoes.c RecebimentosExcecoes.c dependencias/stringHandling.c dependencias/data.c
+SRCS = Cliente.c Recebimento.c Recebimentos.c ClienteExcecoes.c RecebimentoExcecoes.c TratamentoArquivos.c RecebimentosExcecoes.c dependencias/stringHandling.c dependencias/data.c
 # define the C object files 
 #
 # This uses Suffix Replacement within a macro:
