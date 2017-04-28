@@ -6,6 +6,7 @@
 #include "RecebimentosExcecoes.h"
 #include "dependencias/stringHandling.h"
 #include "dependencias/data.h"
+#include "TratamentoArquivos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -248,7 +249,6 @@ int main() {
 				_imprimirListaRecebimentos();
 				break;
 			case '7' :
-				exit(1);
 				break;
 			default :
 				printf("Opção inválida.\n");
@@ -267,6 +267,7 @@ int main() {
 
 	
 	*/
+	gravarRecebimentos(&gerenciadorLista);
 	//atualizaDadados(&gerenciadorLista);
 	destruirRecebimentos(&gerenciadorLista);
 
