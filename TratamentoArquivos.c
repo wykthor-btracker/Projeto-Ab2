@@ -45,7 +45,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 		else {
 			for(j = 0; j < recebFeitos; j++) {
 				Recebimento r = lista->nodes[i]->rec[j];
-				fprintf(escritor, "#?%d$?%.2f$?%d$?%d$?%d$?%d$?%d$?%d$?%d$?%d",
+				fprintf(escritor, "$?%d$?%.2f$?%d$?%d$?%d$?%d$?%d$?%d$?%d$?%d",
 					r->numeroDocumento, r->valorRecebimento,
 					r->dataEmissao.dia, r->dataEmissao.mes,
 					r->dataEmissao.ano, r->dataVencimento.dia, 
@@ -87,30 +87,47 @@ Recebimentos bufferizarRecebimentos() {
 		DEBUG printf("==endereco: %s\n", c->endereco);
 		copyString(c->telefone, strtok(NULL, KEY));//get telefone 
 		DEBUG printf("==endereco: %s\n", c->telefone);
-		/*
-		if(isEqual(strtok(NULL, KEY), "\n"))
+		
+		char tempNumDoc[10];
+		copyString(tempNumDoc, strtok(NULL, KEY));
+
+		if(isEqual(tempNumDoc, "\n")) {
+			DEBUG printf("==Depois dos atributos do cleinte: %s\n", tempNumDoc);
 			continue;
+		}
 		else {
 			int recFeitos = 0;
 			for(j = 0; j < 3; j++) {
 				recFeitos++;
-				buffer.nodes[i]->rec[j] = (Recebimento) malloc(sizeof(receb));
 				Recebimento r = buffer.nodes[i]->rec[j];
-				r->numeroDocumento = stringToInt(strtok(NULL, KEY));
+				r->numeroDocumento = stringToInt(tempNumDoc);
+				DEBUG printf("==numDoc: %d\n", r->numeroDocumento);
 				r->valorRecebimento = atof(strtok(NULL, KEY));
+				DEBUG printf("==Valor rec: %.2f\n", r->valorRecebimento);
 				r->dataEmissao.dia = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DE dia: %d\n", r->dataEmissao.dia);
 				r->dataEmissao.mes = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DE mes: %d\n", r->dataEmissao.mes);
 				r->dataEmissao.ano = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DE ano: %d\n", r->dataEmissao.ano);
 				r->dataVencimento.dia = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DV dia: %d\n", r->dataVencimento.dia);
 				r->dataVencimento.mes = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DV mes: %d\n", r->dataVencimento.mes);
 				r->dataVencimento.ano = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==DV ano: %d\n", r->dataVencimento.ano);
 				r->codigoCliente = stringToInt(strtok(NULL, KEY));
+				DEBUG printf("==Codigo cliente: %d\n", r->codigoCliente);
 				r->flag = stringToInt(strtok(NULL, KEY));
-				if(isEqual(strtok(NULL, KEY), "\n"))
-					break;
+				DEBUG printf("==Flag: %d\n", r->flag);
+				char possFim[5];
+				copyString(possFim, strtok(NULL, KEY));
+				//ERRO TA QUANDO CHEGA AQUI
+				/*if(isEqual(possFim, "\n"))
+					break; */
 			}
-			buffer.nodes[i]->recebimentosFeitos = recFeitos;
-		} */
+			//buffer.nodes[i]->recebimentosFeitos = recFeitos;
+		} 
 	}	
 	fclose(leitor);
 	return buffer;
