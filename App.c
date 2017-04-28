@@ -56,15 +56,15 @@ void inserirNovoRecebimento() {
 	} else {
 		if(!codigoClienteValido(&gerenciadorLista, codigo)) {
 			printf("Não encontramos o cliente pelo codigo fornecido.\n");
-			inserirNovoRecebimento();
+			//inserirNovoRecebimento();
 		} else {
 			int flag = recebimentosDisponiveis(&gerenciadorLista, codigo);
-			DEBUG printf("flag:%d\n", flag);
-			if(flag == 1)
+			DEBUG printf("==FLAG:%d\n", flag);
+			if(!flag)
 				printf("O cliente já atingiu o limite de recebimentos.\n");
 			else {
-				printf("Informe o valor da transação em reis R$: ");
-				float valor;
+				printf("Informe o valor da transação em Reais R$: ");
+				float valor; 	
 				scanf("%f", &valor);
 				getchar();
 				printf("Forneça a data de vencimento (dd/mm/ano) sem espaços: ");
@@ -217,8 +217,10 @@ int main() {
 		gerenciadorLista = bufferizarArquivo();
 		salvar = 1
 	*/
-	gerenciadorLista = novaListarecebimentos();
+	/*
 	system("clear");
+	DEBUG printf("***Arquivo ta vazio? %d\n", arquivoVazio());
+	gerenciadorLista = novaListarecebimentos();
 	setlocale(LC_ALL, "Portuguese");
 	char desligar = 'n';
 	char opcao;
@@ -259,7 +261,7 @@ int main() {
 		getchar();
 		DEBUG printf("***desligar? %c\n", desligar);
 		system("clear");
-	} 
+	} */
 	/*
 	se atualizar == 1
 		gravarRecebimentos
@@ -267,9 +269,18 @@ int main() {
 
 	
 	*/
-	gravarRecebimentos(&gerenciadorLista);
+
+	int av = arquivoVazio();
+	printf("Arquivo ta vazio? %d\n", av);
+	gerenciadorLista = bufferizarRecebimentos();
+	printf("Tamanho da lista: %d\n", gerenciadorLista.tamanho);
+	printf("Index atual: %d\n", gerenciadorLista.index);
+
+	//imprimirListaRecebimentos(&gerenciadorLista);
+
+	////////gravarRecebimentos(&gerenciadorLista);
 	//atualizaDadados(&gerenciadorLista);
-	destruirRecebimentos(&gerenciadorLista);
+	/////////destruirRecebimentos(&gerenciadorLista);
 
 	/*
 	Recebimentos gerenciadorLista = novaListarecebimentos();
