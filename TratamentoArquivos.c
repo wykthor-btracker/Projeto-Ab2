@@ -16,6 +16,15 @@ tamanho index
 token separador $?
 
 */
+
+int arquivoVazio(void) {
+	FILE* leitorDeTeste = fopen(CAMNHO, "r");
+	int x, y;
+	int estaVazio  = (fscanf(leitorDeTeste, "%d$?%d", &x, &y) == EOF);
+	fclose(leitorDeTeste);
+	return estaVazio;
+}
+
 void gravarRecebimentos(Recebimentos* lista) {
 	int i, j;
 	FILE* escritor = fopen(CAMNHO, "w");
@@ -47,6 +56,11 @@ void gravarRecebimentos(Recebimentos* lista) {
 
 Recebimentos* bufferizarRecebimentos() {
 	Recebimentos* buffer = NULL;
-	//.....
+	const char KEY[] = "$?";
+	FILE* leitor = fopen(CAMNHO, "r");
+	int tamanhoLista, indexLista;
+	fscanf(leitor, "%d %d", &tamanhoLista, &indexLista);
+	//verifica se precisa getchar();
+	fclose(leitor);
 	return buffer;
 }
