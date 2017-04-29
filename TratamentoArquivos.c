@@ -52,7 +52,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 					r->dataVencimento.mes, r->dataVencimento.ano, 
 					r->codigoCliente, r->flag);
 			}
-			printf("#\n");
+			fprintf(escritor, "$?#\n");
 		}
 	}
 	fclose(escritor);
@@ -100,7 +100,7 @@ Recebimentos bufferizarRecebimentos() {
 			DEBUG printf("===FIM===\n");
 			continue;
 		}
-		/*
+		
 		else {
 			int recFeitos = 0;
 			for(j = 0; j < 3; j++) {
@@ -109,7 +109,7 @@ Recebimentos bufferizarRecebimentos() {
 				if(j == 0)
 					r->numeroDocumento = stringToInt(tempNumDoc);
 				else {
-					substring = strtok(NULL, KEY);
+					//substring = strtok(NULL, KEY);
 					r->numeroDocumento = stringToInt(substring);
 				}
 				DEBUG printf("==numDoc: %d\n", r->numeroDocumento);
@@ -140,15 +140,15 @@ Recebimentos bufferizarRecebimentos() {
 				substring = strtok(NULL, KEY);
 				r->flag = stringToInt(substring);
 				DEBUG printf("==Flag: %d\n", r->flag);
-
+				substring = strtok(NULL, KEY);
 				DEBUG printf("%s\n", substring);
-				if(isEqual(substring, "1#")) {
+				if(isEqual(substring, "#\n")) {
 					DEBUG printf("===FIM===\n");
 					break;
-				}
+				} 
 			} 
 			buffer.nodes[i]->recebimentosFeitos = recFeitos; 
-		} */
+		} 
 	}	
 	fclose(leitor);
 	return buffer;
