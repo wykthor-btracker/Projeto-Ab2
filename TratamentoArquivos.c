@@ -41,7 +41,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 		//gravando dados dos recebimentos do cliente
 		int recebFeitos = lista->nodes[i]->recebimentosFeitos;
 		if(recebFeitos == 0)
-			fprintf(escritor, "\n");
+			fprintf(escritor, "#\n");
 		else {
 			for(j = 0; j < recebFeitos; j++) {
 				Recebimento r = lista->nodes[i]->rec[j];
@@ -52,7 +52,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 					r->dataVencimento.mes, r->dataVencimento.ano, 
 					r->codigoCliente, r->flag);
 			}
-			printf("\n");
+			printf("#\n");
 		}
 	}
 	fclose(escritor);
@@ -139,17 +139,11 @@ Recebimentos bufferizarRecebimentos() {
 				r->flag = stringToInt(substring);
 				DEBUG printf("==Flag: %d\n", r->flag);
 
-				//substring = strtok(NULL, KEY);
 				DEBUG printf("%s\n", substring);
 				if(isEqual(substring, "1#")) {
 					DEBUG printf("===FIM===\n");
 					break;
 				}
-				//char possFim[5];
-				//copyString(possFim, strtok(NULL, KEY));
-				//ERRO TA QUANDO CHEGA AQUI
-				/*if(isEqual(possFim, "\n"))
-					break; */
 			}
 			buffer.nodes[i]->recebimentosFeitos = recFeitos;
 		} 
