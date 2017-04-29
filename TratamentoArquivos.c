@@ -139,16 +139,19 @@ Recebimentos bufferizarRecebimentos() {
 				r->flag = stringToInt(substring);
 				DEBUG printf("==Flag: %d\n", r->flag);
 
-				DEBUG printf("===%s\n", substring);
-				if(substring == NULL)
+				//substring = strtok(NULL, KEY);
+				DEBUG printf("%s\n", substring);
+				if(isEqual(substring, "1#")) {
 					DEBUG printf("===FIM===\n");
+					break;
+				}
 				//char possFim[5];
 				//copyString(possFim, strtok(NULL, KEY));
 				//ERRO TA QUANDO CHEGA AQUI
 				/*if(isEqual(possFim, "\n"))
 					break; */
 			}
-			//buffer.nodes[i]->recebimentosFeitos = recFeitos;
+			buffer.nodes[i]->recebimentosFeitos = recFeitos;
 		} 
 	}	
 	fclose(leitor);
