@@ -41,7 +41,7 @@ void gravarRecebimentos(Recebimentos* lista) {
 		//gravando dados dos recebimentos do cliente
 		int recebFeitos = lista->nodes[i]->recebimentosFeitos;
 		if(recebFeitos == 0)
-			fprintf(escritor, "#\n");
+			fprintf(escritor, "$?#\n");
 		else {
 			for(j = 0; j < recebFeitos; j++) {
 				Recebimento r = lista->nodes[i]->rec[j];
@@ -95,10 +95,12 @@ Recebimentos bufferizarRecebimentos() {
 		char tempNumDoc[10];
 		copyString(tempNumDoc, substring);
 
-		if(isEqual(tempNumDoc, "\n")) {
-			DEBUG printf("==Depois dos atributos do cleinte: %s\n", tempNumDoc);
+		DEBUG printf("===depois de cliente:%s\n", tempNumDoc);
+		if(isEqual(tempNumDoc, "#\n")) {
+			DEBUG printf("===FIM===\n");
 			continue;
 		}
+		/*
 		else {
 			int recFeitos = 0;
 			for(j = 0; j < 3; j++) {
@@ -144,9 +146,9 @@ Recebimentos bufferizarRecebimentos() {
 					DEBUG printf("===FIM===\n");
 					break;
 				}
-			}
-			buffer.nodes[i]->recebimentosFeitos = recFeitos;
-		} 
+			} 
+			buffer.nodes[i]->recebimentosFeitos = recFeitos; 
+		} */
 	}	
 	fclose(leitor);
 	return buffer;
