@@ -38,6 +38,12 @@ void adicionarCliente(Recebimentos* lista, String nome,
 	printf("Código do novo cliente: %d\n", lista->index);
 	lista->index++;
 	DEBUG printf("Cliente inserido\n");
+	//se atingir 75%, dobra capacidade
+	const float AUX = (float) (lista->index * 0.75);
+	if(lista->index == (int) AUX) {
+		lista->nodes = realloc(lista->nodes, lista->tamanho * 2);
+		lista->tamanho = lista->tamanho * 2;
+	}
 }
 
 void adicionarRecebimento(Recebimentos* lista, 
