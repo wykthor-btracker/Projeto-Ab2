@@ -68,10 +68,8 @@ Data pegarDataAtual(){
 
 int verificarDataVencimento(Data dataVencimento){
 	Data dataEmissao = pegarDataAtual();
-
 	DEBUG printf("****Data vencimento dada: %d/%d/%d\n", 
 			dataVencimento.dia, dataVencimento.mes, dataVencimento.ano);
-
 	if(dataVencimento.ano < dataEmissao.ano){
 		return 0;
 	}else if(dataVencimento.ano == dataEmissao.ano){
