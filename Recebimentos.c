@@ -136,9 +136,14 @@ void alterarDadosClientes(Recebimentos* lista, Cliente cliente) {
 }
 
 void imprimirDadosCliente(Recebimentos* lista, int codigo) {
+	DEBUG printf("dentro de imprimirDadosCliente()\n");
+	DEBUG printf("===Codigo entrado: %d\n", codigo);
+	DEBUG printf("==Index da lista dada: %d\n", lista->index);
 	int i, j;
 	for(i = 0; i < lista->index; i++) {
+		DEBUG printf("===Iteracao %d\n", i);
 		if(lista->nodes[i]->cliente->codigoCliente == codigo) {
+			DEBUG printf("ACHOU CLIENTE PELO CODIGO\n");
 			printf("-----------------------------------------------------\n");
 			printf("Nome cliente: %s\n", lista->nodes[i]->cliente->nome);
 			printf("Endereco cliente: %s\n", lista->nodes[i]->cliente->endereco);
@@ -155,8 +160,8 @@ void imprimirDadosCliente(Recebimentos* lista, int codigo) {
 				printf("	Data de vecimento: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 			}
 			printf("-----------------------------------------------------\n");
+			break;
 		}
-		break;
 	}
 }
 
