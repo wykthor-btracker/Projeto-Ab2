@@ -12,7 +12,7 @@
 #include <locale.h>
 #include <ctype.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 //int clients = 0; //sempre q preciso atualize
 
