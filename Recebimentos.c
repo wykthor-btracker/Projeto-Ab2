@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 Node novoNode() {
 	Node node = (Node) malloc(sizeof(NODE_TAMANHO));

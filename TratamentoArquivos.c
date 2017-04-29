@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 const char CAMNHO[] = "recebimentos.dat";
 

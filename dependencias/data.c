@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define DEBUG if(1)
+#define DEBUG if(0)
 
 // 1 -- TRUE 0 -- FALSE
 int validaData(Data data){
