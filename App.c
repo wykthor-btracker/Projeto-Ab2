@@ -187,7 +187,10 @@ void buscarDadosCliente() {
 	scanf("%[^\n]", entrada);
 	getchar();
 	int codigo = stringToInt(entrada);
-	if(!codigoClienteValido(&gerenciadorLista, codigo))
+	DEBUG printf("==Codigo dado: %d\n", codigo);
+	int testeClienteValido = !codigoClienteValido(&gerenciadorLista, codigo);
+	DEBUG printf("==CLiente eh invalido: %d\n", testeClienteValido);
+	if(testeClienteValido)
 		printf("Cliente não encontrado.\n");
 	else
 		imprimirDadosCliente(&gerenciadorLista, codigo);
@@ -206,21 +209,21 @@ void menuPrincipal() {
 
 int main() {
 	/*
-	atualizar-->gravar por cima ("w")
-	salvar -- >adicionar ao que ja tem ("a")
-
-	int atualizar; //1 : atualizar, 0 salvar
-	se arquivo tiver vazio
-		geranciadorLista = novaListarecebimentos();
-		salvar = 0
+	const int ARQUIVO_VAZIO = arquivoVazio();
+	if(ARQUIVO_VAZIO) 
+		gerenciadorLista = bufferizarRecebimentos();
 	else
-		gerenciadorLista = bufferizarArquivo();
-		salvar = 1
-	*/
-	/*
+		gerenciadorLista = novaListarecebimentos();*/
+
+	
+	const int ARQUIVO_VAZIO = arquivoVazio();
+	gerenciadorLista = bufferizarRecebimentos();
+	//gerenciadorLista = novaListarecebimentos();
 	system("clear");
-	DEBUG printf("***Arquivo ta vazio? %d\n", arquivoVazio());
-	gerenciadorLista = novaListarecebimentos();
+	//DEBUG printf("***Arquivo ta vazio? %d\n", ARQUIVO_VAZIO);
+	DEBUG printf("Tamanho da lista buferizada: %d\n", gerenciadorLista.tamanho);
+	DEBUG printf("Index da lista buferizada: %d\n", gerenciadorLista.index);
+	//gerenciadorLista = novaListarecebimentos();
 	setlocale(LC_ALL, "Portuguese");
 	char desligar = 'n';
 	char opcao;
@@ -260,23 +263,20 @@ int main() {
 		scanf("%c", &desligar);
 		getchar();
 		DEBUG printf("***desligar? %c\n", desligar);
+		DEBUG printf("----Salvando dados no arquivo.\n");
+		gravarRecebimentos(&gerenciadorLista);
 		system("clear");
-	} */
+	} 	
+
+	//--------teste top
 	/*
-	se atualizar == 1
-		gravarRecebimentos
-	senao	
-
-	
-	*/
-
 	int av = arquivoVazio();
 	printf("Arquivo ta vazio? %d\n", av);
 	gerenciadorLista = bufferizarRecebimentos();
 	printf("Tamanho da lista: %d\n", gerenciadorLista.tamanho);
 	printf("Index atual: %d\n", gerenciadorLista.index);
-
-	//imprimirListaRecebimentos(&gerenciadorLista);
+	imprimirListaRecebimentos(&gerenciadorLista); */
+	////////////////////////////////////////////////
 
 	////////gravarRecebimentos(&gerenciadorLista);
 	//atualizaDadados(&gerenciadorLista);
