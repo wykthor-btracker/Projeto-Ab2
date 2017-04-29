@@ -207,17 +207,15 @@ void menuPrincipal() {
 	printf("	(7) Encerrar programa.\n");
 }
 
-int main() {
-	/*
+int main() {	
 	const int ARQUIVO_VAZIO = arquivoVazio();
-	if(ARQUIVO_VAZIO) 
+	if(!ARQUIVO_VAZIO) 
 		gerenciadorLista = bufferizarRecebimentos();
 	else
-		gerenciadorLista = novaListarecebimentos();*/
+		gerenciadorLista = novaListarecebimentos();
 
-	
-	const int ARQUIVO_VAZIO = arquivoVazio();
-	gerenciadorLista = bufferizarRecebimentos();
+	/////////const int ARQUIVO_VAZIO = arquivoVazio();
+	/////////gerenciadorLista = bufferizarRecebimentos();
 	//gerenciadorLista = novaListarecebimentos();
 	system("clear");
 	//DEBUG printf("***Arquivo ta vazio? %d\n", ARQUIVO_VAZIO);
