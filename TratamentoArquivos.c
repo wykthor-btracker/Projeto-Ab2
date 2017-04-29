@@ -81,15 +81,19 @@ Recebimentos bufferizarRecebimentos() {
 		char* substring = strtok(linhaArquivo, KEY);
 		copyString(c->nome, substring); 				  //get name
 		DEBUG printf("==Nome: %s\n", substring);
-		c->codigoCliente = stringToInt(strtok(NULL, KEY));//get codigo
+		substring = strtok(NULL, KEY);
+		c->codigoCliente = stringToInt(substring);//get codigo
 		DEBUG printf("==Codigo cliente: %d\n", c->codigoCliente);
-		copyString(c->endereco, strtok(NULL, KEY));//get endereco
+		substring = strtok(NULL, KEY);
+		copyString(c->endereco, substring);//get endereco
 		DEBUG printf("==endereco: %s\n", c->endereco);
-		copyString(c->telefone, strtok(NULL, KEY));//get telefone 
+		substring = strtok(NULL, KEY);
+		copyString(c->telefone, substring);//get telefone 
 		DEBUG printf("==endereco: %s\n", c->telefone);
 		
+		substring = strtok(NULL, KEY);
 		char tempNumDoc[10];
-		copyString(tempNumDoc, strtok(NULL, KEY));
+		copyString(tempNumDoc, substring);
 
 		if(isEqual(tempNumDoc, "\n")) {
 			DEBUG printf("==Depois dos atributos do cleinte: %s\n", tempNumDoc);
@@ -100,28 +104,46 @@ Recebimentos bufferizarRecebimentos() {
 			for(j = 0; j < 3; j++) {
 				recFeitos++;
 				Recebimento r = buffer.nodes[i]->rec[j];
-				r->numeroDocumento = stringToInt(tempNumDoc);
+				if(j == 0)
+					r->numeroDocumento = stringToInt(tempNumDoc);
+				else {
+					substring = strtok(NULL, KEY);
+					r->numeroDocumento = stringToInt(substring);
+				}
 				DEBUG printf("==numDoc: %d\n", r->numeroDocumento);
-				r->valorRecebimento = atof(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->valorRecebimento = atof(substring);
 				DEBUG printf("==Valor rec: %.2f\n", r->valorRecebimento);
-				r->dataEmissao.dia = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataEmissao.dia = stringToInt(substring);
 				DEBUG printf("==DE dia: %d\n", r->dataEmissao.dia);
-				r->dataEmissao.mes = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataEmissao.mes = stringToInt(substring);
 				DEBUG printf("==DE mes: %d\n", r->dataEmissao.mes);
-				r->dataEmissao.ano = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataEmissao.ano = stringToInt(substring);
 				DEBUG printf("==DE ano: %d\n", r->dataEmissao.ano);
-				r->dataVencimento.dia = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataVencimento.dia = stringToInt(substring);
 				DEBUG printf("==DV dia: %d\n", r->dataVencimento.dia);
-				r->dataVencimento.mes = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataVencimento.mes = stringToInt(substring);
 				DEBUG printf("==DV mes: %d\n", r->dataVencimento.mes);
-				r->dataVencimento.ano = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->dataVencimento.ano = stringToInt(substring);
 				DEBUG printf("==DV ano: %d\n", r->dataVencimento.ano);
-				r->codigoCliente = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->codigoCliente = stringToInt(substring);
 				DEBUG printf("==Codigo cliente: %d\n", r->codigoCliente);
-				r->flag = stringToInt(strtok(NULL, KEY));
+				substring = strtok(NULL, KEY);
+				r->flag = stringToInt(substring);
 				DEBUG printf("==Flag: %d\n", r->flag);
-				char possFim[5];
-				copyString(possFim, strtok(NULL, KEY));
+
+				DEBUG printf("===%s\n", substring);
+				if(substring == NULL)
+					DEBUG printf("===FIM===\n");
+				//char possFim[5];
+				//copyString(possFim, strtok(NULL, KEY));
 				//ERRO TA QUANDO CHEGA AQUI
 				/*if(isEqual(possFim, "\n"))
 					break; */
