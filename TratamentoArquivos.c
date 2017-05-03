@@ -12,12 +12,11 @@ const char CAMNHO[] = "recebimentos.dat";
 
 /*
 tamanho index
-[info cliente 1,info rec 11, info rec 12, info rec 13]
-[info cliente 2, info rec 21, info rec 22, info rec 23]
+nome cliente1$?codigo cleinte1$?endereco cliente1$?telefone cliente1$?.....
 ....
 
-token separador $?
-
+--->token separador $?
+---># : indica o fim da linha de informacao
 */
 
 int arquivoVazio(void) {
