@@ -14,8 +14,6 @@
 
 #define DEBUG if(0)
 
-//int clients = 0; //sempre q preciso atualize
-
 Recebimentos gerenciadorLista; //lista global de recebimentos
 
 void cabecalho() {
@@ -56,7 +54,6 @@ void inserirNovoRecebimento() {
 	} else {
 		if(!codigoClienteValido(&gerenciadorLista, codigo)) {
 			printf("Não encontramos o cliente pelo codigo fornecido.\n");
-			//inserirNovoRecebimento();
 		} else {
 			int flag = recebimentosDisponiveis(&gerenciadorLista, codigo);
 			DEBUG printf("==FLAG:%d\n", flag);
@@ -198,12 +195,12 @@ void buscarDadosCliente() {
 
 void menuPrincipal() {
 	printf("Digite uma das opções: \n");
-	printf("	(1) Inserir novo cliente.\n"); //ok
+	printf("	(1) Inserir novo cliente.\n"); 
 	printf("	(2) Inserir novo recebimento.\n");
-	printf("	(3) Alterar cadastro do cliente.\n"); //ok
+	printf("	(3) Alterar cadastro do cliente.\n"); 
 	printf("	(4) Buscar recebimentos por data.\n");
 	printf("	(5) Buscar dados de um cliente.\n");
-	printf("	(6) Imprimir todos os dados.\n"); //PARA TESTE
+	printf("	(6) Imprimir todos os dados.\n"); 
 	printf("	(7) Encerrar programa.\n");
 }
 
@@ -214,14 +211,9 @@ int main() {
 	else
 		gerenciadorLista = novaListarecebimentos();
 
-	/////////const int ARQUIVO_VAZIO = arquivoVazio();
-	/////////gerenciadorLista = bufferizarRecebimentos();
-	//gerenciadorLista = novaListarecebimentos();
 	system("clear");
-	//DEBUG printf("***Arquivo ta vazio? %d\n", ARQUIVO_VAZIO);
 	DEBUG printf("Tamanho da lista buferizada: %d\n", gerenciadorLista.tamanho);
 	DEBUG printf("Index da lista buferizada: %d\n", gerenciadorLista.index);
-	//gerenciadorLista = novaListarecebimentos();
 	setlocale(LC_ALL, "Portuguese");
 	char desligar = 'n';
 	char opcao;
@@ -265,32 +257,5 @@ int main() {
 		gravarRecebimentos(&gerenciadorLista);
 		system("clear");
 	} 	
-
-	//--------teste top
-	/*
-	int av = arquivoVazio();
-	printf("Arquivo ta vazio? %d\n", av);
-	gerenciadorLista = bufferizarRecebimentos();
-	printf("Tamanho da lista: %d\n", gerenciadorLista.tamanho);
-	printf("Index atual: %d\n", gerenciadorLista.index);
-	imprimirListaRecebimentos(&gerenciadorLista); */
-	////////////////////////////////////////////////
-
-	////////gravarRecebimentos(&gerenciadorLista);
-	//atualizaDadados(&gerenciadorLista);
-	/////////destruirRecebimentos(&gerenciadorLista);
-
-	/*
-	Recebimentos gerenciadorLista = novaListarecebimentos();
-	printf("tamanho %d\n", tamanhoListaRecebimentos(&gerenciadorLista));
-	adicionarCliente(&gerenciadorLista, "Aurelio", "rua do aurelio", "88333");
-
-	adicionarRecebimento(&gerenciadorLista, 0, 505);
-	adicionarRecebimento(&gerenciadorLista, 0, 1);
-	adicionarRecebimento(&gerenciadorLista, 0, 202);
-	adicionarCliente(&gerenciadorLista, "Mario", "rua do mario", "284922222");
-	imprimirListaRecebimentos(&gerenciadorLista);
-	printf("tamanho %d\n", tamanhoListaRecebimentos(&gerenciadorLista));
-	destroirRecebimentos(&gerenciadorLista); */
 	return 0;
 }
