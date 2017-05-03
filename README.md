@@ -24,6 +24,10 @@
 ## Control
 
 
+# Para construir executável, abra o terminal e vá até a pasta que está esse arquivo no seu pc, digite o comando make e chame o executável:
+## $make
+## ./App
+
 # **Tarefas específicas**
 ## Implementar arquivo Cliente (Responsável: Aurelio Buarque; Deadline: 27/03) - ok
 ## Implementar arquivo Recebimento (Responsável: Pedro Soares; Deadline: 27/03) - ok
