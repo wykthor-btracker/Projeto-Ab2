@@ -118,9 +118,9 @@ void imprimirListaRecebimentos(Recebimentos* lista) {
 			Recebimento handle = lista->nodes[i]->rec[j];
 			//printf("	Recebimento numero %d\n", j);
 			printf("	Numero do documento: %d\n",  handle->numeroDocumento);
-			printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
-			printf("	Data de emissão: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
-			printf("	Data de vecimento: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
+			printf("	Valor do documento R$: %.2f\n", handle->valorRecebimento);
+			printf("	Data de emissão: %02d/%02d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
+			printf("	Data de vecimento: %02d/%02d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 		}
 	}
 } 
@@ -161,9 +161,9 @@ void imprimirDadosCliente(Recebimentos* lista, int codigo) {
 				Recebimento handle = lista->nodes[i]->rec[j];
 				//printf("	Recebimento numero %d\n", j);
 				printf("	Numero do documento: %d\n",  handle->numeroDocumento);
-				printf("	Valor do documento : %.2f\n", handle->valorRecebimento);
-				printf("	Data de emissão: %d/%d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
-				printf("	Data de vecimento: %d/%d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
+				printf("	Valor do documento R$: %.2f\n", handle->valorRecebimento);
+				printf("	Data de emissão: %02d/%02d/%d\n", handle->dataEmissao.dia, handle->dataEmissao.mes, handle->dataEmissao.ano);
+				printf("	Data de vecimento: %02d/%02d/%d\n", handle->dataVencimento.dia, handle->dataVencimento.mes, handle->dataVencimento.ano);
 			}
 			printf("-----------------------------------------------------\n");
 			break;
