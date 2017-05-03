@@ -3,11 +3,11 @@
 #include "Cliente.h"
 #include "Recebimentos.h"
 #include "dependencias/stringHandling.h"
-/*
-int registroDisponivel(Cliente cliente,Recebimento *recebimentosLista);
-//Checa se e possivel salvar um novo recebimento.
 
-int numeroDocumentoValido(unsigned int numDoc,int *tamanhoLista,Recebimento *lista);
-//Checar se numDoc esta dentro da lista de recebimentos.
-*/
+//1 se for invalido (negativo), 0 senao
+int codigoClienteInvalido(const int codigoCliente);
+
+//1 se for invalido (negativo), 0 senao
+int codigoRecebimentoInvalido(const int codigoRecebimento);
+
 #endif
